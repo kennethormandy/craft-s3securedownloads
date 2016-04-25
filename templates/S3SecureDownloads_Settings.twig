@@ -1,0 +1,41 @@
+{#
+/**
+ * AWS Signed URL Generator plugin for Craft CMS
+ *
+ * AWS Signed URL Generator Settings.twig
+ *
+ * @author    Jonathan Melville
+ * @copyright Copyright (c) 2016 Jonathan Melville
+ * @link      http://jonathanmelville.com
+ * @package   AwsSignedUrlGenerator
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: 'Link Expiration Time',
+    instructions: 'Enter the expiration time (in seconds) for your signed URLs.',
+    id: 'linkExpirationTime',
+    name: 'linkExpirationTime', 
+    value: settings['linkExpirationTime']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Force file download',
+    instructions: 'Force the file to download instead of being rendered in the users browser.',
+    id: 'forceFileDownload',
+    name: 'forceFileDownload', 
+    on: (settings.forceFileDownload is defined) ? settings.forceFileDownload : "",
+    value: settings['forceFileDownload']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Require Logged In User',
+    instructions: 'Only allow logged in users to download files.',
+    id: 'requireLoggedInUser',
+    name: 'requireLoggedInUser', 
+    on: (settings.requireLoggedInUser is defined) ? settings.requireLoggedInUser : "",
+    value: settings['requireLoggedInUser']})
+}}
