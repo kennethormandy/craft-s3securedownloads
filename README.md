@@ -19,7 +19,7 @@ S3 Secure Downloads works on Craft 2.5.x.
 
 Pass in an asset's entry id and it will return a signed URL for that asset:
 
-`<a href="{{ getSignedUrl(entry.myFile[0].id }}">{{ entry.myFile[0].title }}</a>`
+`<a href="{{ getSignedUrl(entry.myAssetField[0].id) }}">{{ entry.myAssetField[0].title }}</a>`
 
 ## S3 Secure Downloads Changelog
 
