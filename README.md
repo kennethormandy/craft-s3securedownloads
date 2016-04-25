@@ -2,7 +2,7 @@
 
 This plugin will return a signed URL used to allow temporary S3 downloads. It also proxies the request and ensures there is a valid user session.
 
-![Screenshot](resources/screenshots/screenshot.png)
+[Screenshot](resources/screenshots/screenshot.png)
 
 ## Installation
 
