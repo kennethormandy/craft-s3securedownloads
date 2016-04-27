@@ -1,6 +1,8 @@
 # S3 Secure Downloads plugin for Craft CMS
 
-This plugin will return a signed URL used to allow temporary S3 downloads. It also proxies the request and ensures there is a valid user session.
+This plugin will return a [signed URL](http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html) used to allow temporary access to private objects with an expiring URL. You can optionally allow file downloads only to logged in users and force file downloads (useful for PDF files). This plugin was originally developed for a client in the financial services industry who wanted to make sure only logged in users had access to downloads of financial reports, and download links couldn't be shared.
+
+Craft introduced the ability to have private S3 assets in [2.6.2771](https://craftcms.com/changelog#build2771). Now you can keep your S3 objects private but grant temporary access to them with an expiring download link. 
 
 ![Alt text](resources/screenshots/screenshot.png?raw=true "Screenshot")
 
