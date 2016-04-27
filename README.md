@@ -11,7 +11,7 @@ Craft introduced the ability to have private S3 assets in [2.6.2771](https://cra
 To install S3 Secure Downloads, follow these steps:
 
 1. Download & unzip the file and place the `s3securedownloads` directory into your `craft/plugins` directory
-2.  -OR- do a `git clone git@github.com:jonathanmelville/s3-secure-downloads.git` directly into your `craft/plugins` folder.  You can then update it with `git pull`
+2.  -OR- do a `git clone git@github.com:jonathanmelville/s3securedownloads.git` directly into your `craft/plugins` folder.  You can then update it with `git pull`
 3. Install plugin in the Craft Control Panel under Settings > Plugins
 4. The plugin folder should be named `s3securedownloads` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
 
