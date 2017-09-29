@@ -48,8 +48,8 @@ class S3SecureDownloads_UrlService extends BaseApplicationComponent
 
 		$resource = str_replace( array( '%2F', '%2B' ), array( '/', '+' ), rawurlencode( $baseAssetPath ) );
 
-		$string_to_sign = "GET\n\n\n$expires\n/$bucketName/$resource";
-		$final_url = "https://s3.amazonaws.com/$bucketName/$resource?";
+		$string_to_sign = "GET\n\n\n{$expires}\n/{$bucketName}/{$resource}";
+		$final_url = "https://{$bucketName}.s3.amazonaws.com/{$resource}?";
 
 		$append_char = '?';
 		foreach ( $headers as $header => $value ) {
