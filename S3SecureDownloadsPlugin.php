@@ -181,7 +181,7 @@ class S3SecureDownloadsPlugin extends BasePlugin
     protected function defineSettings()
     {
         return array(
-            'linkExpirationTime' => array(AttributeType::String, 'default' => ''),
+            'linkExpirationTime' => array(AttributeType::String, 'default' => '86400'),
             'forceFileDownload' => array(AttributeType::Bool, 'default' => 1),
             'requireLoggedInUser' => array(AttributeType::Bool, 'default' => 1)
         );
