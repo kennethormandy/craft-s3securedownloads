@@ -19,9 +19,9 @@ class S3SecureDownloads_UrlService extends BaseApplicationComponent
 		$sourceType = craft()->assetSources->getSourceTypeById( $entry->sourceId );
 		$assetSettings = $sourceType->getSettings();
 
-		$urlPrefix = $assetSettings->urlPrefix;
 		$assetUrl = $entry->filename;
 
+		$urlPrefix = $assetSettings->urlPrefix . $assetSettings->subfolder;
 
 		// Remove the mtime query string just in case Craft adds it.
 		$baseAssetPath = str_replace( $urlPrefix, "", UrlHelper::stripQueryString($assetUrl) );
