@@ -15,20 +15,17 @@ class S3SecureDownloads_UrlService extends BaseApplicationComponent
 	public function getSignedUrl( $entry_id ) {
 
 		$entry = craft()->elements->getElementById( $entry_id );
-
-		$assetUrl = $entry->url;
+		$fileName = $entry->filename;
 
 		$sourceType = craft()->assetSources->getSourceTypeById( $entry->sourceId );
 		$assetSettings = $sourceType->getSettings();
-
-		$urlPrefix = $assetSettings->urlPrefix;
-
-		// Remove the mtime query string just in case Craft adds it.
-		$baseAssetPath = str_replace( $urlPrefix, "", UrlHelper::stripQueryString($assetUrl) );
-
-
-		$fileName = $entry->filename;
 		$bucketName = $assetSettings->bucket;
+
+		// Add slash to end of path, since subfolder may not have it
+		// https://stackoverflow.com/a/9339669/864799
+		$urlPrefix = rtrim( $assetSettings->subfolder, "/" ) . "/";
+
+		$baseAssetPath = $urlPrefix . $fileName;
 		$keyId = $assetSettings->keyId;
 		$secretKey = $assetSettings->secret;
 		$linkExpirationTime = $this->getSetting( "linkExpirationTime" );
