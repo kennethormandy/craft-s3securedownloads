@@ -1,13 +1,11 @@
 {#
 /**
- * AWS Signed URL Generator plugin for Craft CMS
+ * AWS Signed URL Generator settings
  *
- * AWS Signed URL Generator Settings.twig
- *
- * @author    Jonathan Melville
- * @copyright Copyright (c) 2016 Jonathan Melville
- * @link      http://jonathanmelville.com
- * @package   AwsSignedUrlGenerator
+ * @author    Jonathan Melville, Kenneth Ormandy
+ * @copyright Copyright © 2016–2019 Jonathan Melville, Copyright © 2019 Kenneth Ormandy Inc.
+ * @link      https://github.com/kennethormandy/craft-s3securedownloads
+ * @package   S3SecureDownloads
  * @since     1.0.0
  */
 #}
@@ -26,9 +24,8 @@
     label: 'Force file download',
     instructions: 'Force the file to download instead of being rendered in the users browser.',
     id: 'forceFileDownload',
-    name: 'forceFileDownload', 
-    on: (settings.forceFileDownload is defined) ? settings.forceFileDownload : "",
-    value: settings['forceFileDownload']})
+    name: 'forceFileDownload',
+    on: settings['forceFileDownload']})
 }}
 
 {{ forms.lightswitchField({
@@ -36,6 +33,5 @@
     instructions: 'Only allow logged in users to download files.',
     id: 'requireLoggedInUser',
     name: 'requireLoggedInUser', 
-    on: (settings.requireLoggedInUser is defined) ? settings.requireLoggedInUser : "",
-    value: settings['requireLoggedInUser']})
+    on: settings['requireLoggedInUser']})
 }}

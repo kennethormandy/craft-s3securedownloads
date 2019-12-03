@@ -5,17 +5,16 @@
  * S3 Secure Downloads Twig Extension
  *
  *
- * @author    Jonathan Melville
- * @copyright Copyright (c) 2016 Jonathan Melville
- * @link      http://jonathanmelville.com
+ * @author    Jonathan Melville, Kenneth Ormandy
+ * @copyright Copyright © 2016–2019 Jonathan Melville, Copyright © 2019 Kenneth Ormandy Inc.
+ * @link      https://github.com/kennethormandy/craft-s3securedownloads
  * @package   S3SecureDownloads
  * @since     1.0.0
  */
 
-namespace Craft;
-
-use Twig_Extension;
-use Twig_Filter_Method;
+namespace kennethormandy\s3securedownloads\twigextensions;
+use kennethormandy\s3securedownloads\S3SecureDownloads;
+use kennethormandy\s3securedownloads\services;
 
 class S3SecureDownloadsTwigExtension extends \Twig_Extension
 {
@@ -38,9 +37,9 @@ class S3SecureDownloadsTwigExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        return array(
-            'getSignedUrl' => new \Twig_Function_Method($this, 'getSignedUrl'),
-        );
+        return [
+            new \Twig_SimpleFunction('getSignedUrl', [S3SecureDownloads::$plugin->s3securedownloads, 'getSignedUrl']),
+        ];
     }
 
     /**
@@ -50,6 +49,6 @@ class S3SecureDownloadsTwigExtension extends \Twig_Extension
     public function getSignedUrl($entry_id = null)
     {
 
-        return UrlHelper::getActionUrl('s3SecureDownloads/downloadProxy/getFile', array('id' => $entry_id));
+        return UrlHelper::actionUrl('s3SecureDownloads/downloadProxy/getFile', array('id' => $entry_id));
     }
 }
