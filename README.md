@@ -6,7 +6,7 @@ This plugin will return a [signed URL](http://docs.aws.amazon.com/AmazonS3/lates
 
 Craft introduced the ability to have private S3 assets in [2.6.2771](https://craftcms.com/changelog#build2771). Now you can keep your S3 objects private but grant temporary access to them with an expiring link. 
 
-![Alt text](resources/screenshots/screenshot.png?raw=true "Screenshot")
+![Screenshot of the plugin settings.](./src/resources/screenshots/screenshot.png)
 
 ## Installation
 
