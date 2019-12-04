@@ -2,7 +2,9 @@
 
 **NOTE** This plugin is being converted for Craft CMS3, and the README is being revised accordingly.
 
-This plugin will return a [signed URL](http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html) used to allow temporary access to private objects with an expiring URL. You can optionally allow file downloads only for logged in users and force file downloads (useful for PDF files). This plugin was originally developed for a client in the financial services industry who wanted to make sure only logged in users had access to downloads of financial reports, and download links couldn't be shared.
+This plugin will return a [signed URL](http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html) used to allow temporary access to private objects with an expiring URL. You can optionally allow file downloads only for logged in users and force file downloads (useful for PDF files).
+
+This plugin was originally developed by [Jonathan Melville](https://github.com/jonathanmelville/s3securedownloads) for a client in the financial services industry who wanted to make sure only logged in users had access to downloads of financial reports, and download links couldn’t be shared.
 
 Craft introduced the ability to have private S3 assets in [2.6.2771](https://craftcms.com/changelog#build2771). Now you can keep your S3 objects private but grant temporary access to them with an expiring link. 
 
@@ -10,14 +12,15 @@ Craft introduced the ability to have private S3 assets in [2.6.2771](https://cra
 
 ## Installation
 
-To install S3 Secure Downloads, follow these steps:
+```sh
+# Require the plugin with composer
+composer require kennethormandy/craft-s3securedownloads
 
-1. Download & unzip the file and place the `s3securedownloads` directory into your `craft/plugins` directory
-2.  -OR- do a `git clone git@github.com:jonathanmelville/s3securedownloads.git` directly into your `craft/plugins` folder.  You can then update it with `git pull`
-3. Install plugin in the Craft Control Panel under Settings > Plugins
-4. The plugin folder should be named `s3securedownloads` for Craft to see it.  GitHub recently started appending `-master` (the branch name) to the name of the folder for zip file downloads.
+# Install the plugin via the Control Panel, or by running:
+./craft install/plugin s3securedownloads
+```
 
-~~S3 Secure Downloads works on Craft 2.5.x.~~
+S3 Secure Downloads is built for Craft v3.x. For a version that runs on Craft 2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads).
 
 ## Usage
 
