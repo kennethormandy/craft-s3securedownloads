@@ -20,25 +20,19 @@ composer require kennethormandy/craft-s3securedownloads
 ./craft install/plugin s3securedownloads
 ```
 
-S3 Secure Downloads is built for Craft v3.x. For a version that runs on Craft 2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads).
+S3 Secure Downloads is built for Craft v3.x. For a version that runs on Craft v2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads).
 
 ## Usage
 
 Pass in an asset's entry id and it will return a signed URL for that asset:
 
-`<a href="{{ getSignedUrl(entry.myAssetField[0].id) }}">{{ entry.myAssetField[0].title }}</a>`
-
-## S3 Secure Downloads Changelog
-
-### 1.0.0 -- 2016.02.25
-
-* Initial release
-
-Brought to you by [Jonathan Melville](http://jonathanmelville.com)
+```twig
+<a href="{{ getSignedUrl(entry.myAssetField[0].id) }}">{{ entry.myAssetField[0].title }}</a>
+```
 
 ## License
 
-[The MIT License (MIT)](./LICENSE.txt)
+[The MIT License (MIT)](./LICENSE.md)
 
-Copyright © 2016–2019 [Jonathan Melville](https://github.com/jonathanmelville/s3securedownloads)
+Copyright © 2016–2019 [Jonathan Melville](https://github.com/jonathanmelville/s3securedownloads)<br/>
 Copyright © 2019 [Kenneth Ormandy Inc.](https://kennethormandy.com)
