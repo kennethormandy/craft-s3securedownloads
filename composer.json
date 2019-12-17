@@ -3,6 +3,7 @@
   "description": "Return an AWS signed URL and proxy the download request.",
   "version": "2.1.0",
   "type": "craft-plugin",
+  "license": "MIT",
   "keywords": [
     "craft",
     "aws"
@@ -21,7 +22,8 @@
     "email": "hello@kennethormandy.com",
     "issues": "https://github.com/kennethormandy/craft-s3securedownloads/issues?state=open",
     "source": "https://github.com/kennethormandy/craft-s3securedownloads",
-    "docs": "https://github.com/kennethormandy/craft-s3securedownloads/blob/master/README.md"
+    "docs": "https://github.com/kennethormandy/craft-s3securedownloads/blob/master/README.md",
+    "rss": "https://github.com/kennethormandy/craft-s3securedownloads/releases.atom"
   },
   "require": {
     "craftcms/cms": "^3.1.0"
@@ -34,7 +36,9 @@
   "extra": {
     "handle": "s3securedownloads",
     "name": "S3 Secure Downloads",
+    "developer": "Kenneth Ormandy Inc.",
     "class": "kennethormandy\\s3securedownloads\\S3SecureDownloads",
-    "documentationUrl": "https://github.com/kennethormandy/craft-s3securedownloads/blob/master/README.md"
+    "documentationUrl": "https://github.com/kennethormandy/craft-s3securedownloads/blob/master/README.md",
+    "changelogUrl": "https://raw.githubusercontent.com/kennethormandy/craft-s3securedownloads/master/CHANGELOG.md"
   }
 }
