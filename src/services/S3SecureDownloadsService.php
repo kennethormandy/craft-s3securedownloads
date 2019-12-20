@@ -70,7 +70,12 @@ class S3SecureDownloadsService extends Component
 		$resource = str_replace( array( '%2F', '%2B' ), array( '/', '+' ), rawurlencode( $baseAssetPath ) );
 
 		$string_to_sign = "GET\n\n\n{$expires}\n/{$bucketName}/{$resource}";
-		$final_url = "https://{$bucketName}.s3.amazonaws.com/{$resource}?";
+		
+		if ($this->convertEnvVariable($assetSettings['hasUrls'])) {
+            		$final_url = "{$this->convertEnvVariable($assetSettings['url'])}/{$resource}?";
+		} else {
+			$final_url = "https://{$bucketName}.s3.amazonaws.com/{$resource}?";
+		}
 
 		$append_char = '?';
 		foreach ( $headers as $header => $value ) {
