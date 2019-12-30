@@ -71,8 +71,13 @@ class S3SecureDownloadsService extends Component
 
 		$string_to_sign = "GET\n\n\n{$expires}\n/{$bucketName}/{$resource}";
 		
-		if ($this->convertEnvVariable($assetSettings['hasUrls'])) {
-            		$final_url = "{$this->convertEnvVariable($assetSettings['url'])}/{$resource}?";
+		if ($assetSettings['hasUrls']) {
+			$base_url = $this->convertEnvVariable($assetSettings['url']);
+
+			// Remove possible duplicate trailing slash
+			$base_url = rtrim( $base_url, "/" );
+
+			$final_url = "{$base_url}/{$resource}?";
 		} else {
 			$final_url = "https://{$bucketName}.s3.amazonaws.com/{$resource}?";
 		}
