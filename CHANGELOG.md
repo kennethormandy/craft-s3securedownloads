@@ -2,6 +2,8 @@
 
 ## Next
 
+- Added support for the custom asset volume base URL (#2)
+
 ## Fixed
 
 - Fixed Changelog formatting, path in `composer.json`
