@@ -2,11 +2,19 @@
 
 ## Next
 
+### Added
+
 - Added support for the custom asset volume base URL (#2)
 
-## Fixed
+### Fixed
 
 - Fixed Changelog formatting, path in `composer.json`
+- Fixed used of requireLoggedInUser setting for Craft 3
+- Fixed possibility of leading slash in resource name
+
+### Changed
+
+- Removes lockfile
 
 ## [2.1.0 - 2019-12-16](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v2.1.0)
 
