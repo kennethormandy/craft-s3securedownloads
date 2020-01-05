@@ -69,6 +69,11 @@ class S3SecureDownloadsService extends Component
 
 		$resource = str_replace( array( '%2F', '%2B' ), array( '/', '+' ), rawurlencode( $baseAssetPath ) );
 
+		// Remove possible leading slash
+		if ($resource[0] == '/') {
+			$resource = ltrim($resource, $resource[0]);
+		}
+		
 		$string_to_sign = "GET\n\n\n{$expires}\n/{$bucketName}/{$resource}";
 		
 		if ($assetSettings['hasUrls']) {
