@@ -1,5 +1,18 @@
 # Release Notes for S3 Secure Downloads
 
+<!--
+
+## [0.0.0 - YYYY-MM-DD](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v0.0.0)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+-->
+
 ## Next
 
 ### Added
