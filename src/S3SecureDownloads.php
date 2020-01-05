@@ -22,6 +22,7 @@ use craft\web\twig\variables\CraftVariable;
 use kennethormandy\s3securedownloads\models\Settings;
 use kennethormandy\s3securedownloads\services\S3SecureDownloadsService;
 use kennethormandy\s3securedownloads\twigextensions\S3SecureDownloadsTwigExtension;
+use kennethormandy\s3securedownloads\controllers\DownloadProxyController;
 
 use yii\base\Event;
 

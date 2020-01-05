@@ -16,6 +16,8 @@ namespace kennethormandy\s3securedownloads\twigextensions;
 use kennethormandy\s3securedownloads\S3SecureDownloads;
 use kennethormandy\s3securedownloads\services;
 
+use craft\helpers\UrlHelper;
+
 class S3SecureDownloadsTwigExtension extends \Twig_Extension
 {
     /**
@@ -38,7 +40,7 @@ class S3SecureDownloadsTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('getSignedUrl', [S3SecureDownloads::$plugin->s3securedownloads, 'getSignedUrl']),
+            new \Twig_SimpleFunction('getSignedUrl', [$this, 'getSignedUrl']),
         ];
     }
 
@@ -48,7 +50,7 @@ class S3SecureDownloadsTwigExtension extends \Twig_Extension
      */
     public function getSignedUrl($entry_id = null)
     {
-
-        return UrlHelper::actionUrl('s3SecureDownloads/downloadProxy/getFile', array('id' => $entry_id));
+        $url = UrlHelper::actionUrl('s3securedownloads/download-proxy/get-file', array('id' => $entry_id));
+        return $url;
     }
 }
