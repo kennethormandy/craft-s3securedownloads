@@ -15,6 +15,8 @@
 
 ## Next
 
+## [2.2.0 - 2020-01-05](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v2.2.0)
+
 ### Added
 
 - Added support for the custom asset volume base URL (#2)
