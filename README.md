@@ -29,6 +29,39 @@ Pass in an asset's entry id and it will return a signed URL for that asset:
 <a href="{{ getSignedUrl(asset.id) }}">{{ asset }}</a>
 ```
 
+## Events
+
+- `kennethormandy\s3securedownloads\services\SignUrl`
+  - `SignUrl::EVENT_BEFORE_SIGN_URL`
+  - `SignUrl::EVENT_AFTER_SIGN_URL`
+
+```php
+use Craft;
+use yii\base\Event;
+use kennethormandy\s3securedownloads\events\SignUrlEvent;
+use kennethormandy\s3securedownloads\services\SignUrl;
+
+// …
+
+Event::on(
+    SignUrl::class,
+    SignUrl::EVENT_BEFORE_SIGN_URL,
+    function (SignUrlEvent $event) {
+        $asset = $event->asset;
+        Craft::info("Handle EVENT_BEFORE_SIGN_URL event here", __METHOD__);
+    }
+);
+
+Event::on(
+    SignUrl::class,
+    SignUrl::EVENT_AFTER_SIGN_URL,
+    function (SignUrlEvent $event) {
+        $asset = $event->asset;
+        Craft::info("Handle EVENT_AFTER_SIGN_URL event here", __METHOD__);
+    }
+);
+```
+
 ## License
 
 [The MIT License (MIT)](./LICENSE.md)
