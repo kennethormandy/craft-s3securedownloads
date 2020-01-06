@@ -3,6 +3,7 @@
 namespace kennethormandy\s3securedownloads\services;
 
 use kennethormandy\s3securedownloads\S3SecureDownloads;
+use kennethormandy\s3securedownloads\events\SignUrlEvent;
 
 use Craft;
 use craft\base\Component;
@@ -14,15 +15,23 @@ use yii\base\Exception;
 
 class S3SecureDownloadsService extends Component
 {
-	public function getSignedUrl( $asset_id ) {
+	public const EVENT_BEFORE_SIGN_URL = 'EVENT_BEFORE_SIGN_URL';
+	public const EVENT_AFTER_SIGN_URL = 'EVENT_AFTER_SIGN_URL';
 
-		if (empty($asset_id)) {
+	public function getSignedUrl( $asset_uid ) {
+
+		if (empty($asset_uid)) {
 			throw new Exception('No asset defined');
 		}
+		
+		$asset = Asset::find()->uid($asset_uid)->one();
 
-		$asset = Asset::find()->uid($asset_id)->one();
+		if ($this->hasEventHandlers(self::EVENT_BEFORE_SIGN_URL)) {
+			$event = new SignUrlEvent([ 'asset' => $asset ]);
+			$this->trigger(self::EVENT_BEFORE_SIGN_URL, $event);
+		}
+
 		$fileName = $asset->filename;
-
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
 
@@ -79,7 +88,14 @@ class S3SecureDownloadsService extends Component
 
 		$signature = urlencode( base64_encode( hash_hmac( 'sha1', $string_to_sign, $secretKey, true ) ) );
 
-		return $final_url . "AWSAccessKeyId=$keyId&Signature=$signature&Expires=$expires";
+		$final_url = $final_url . "AWSAccessKeyId=$keyId&Signature=$signature&Expires=$expires";
+
+		if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
+			$event = new SignUrlEvent([ 'asset' => $asset ]);
+			$this->trigger(self::EVENT_AFTER_SIGN_URL, $event);
+		}
+		
+		return $final_url;
 
 	}
 }
