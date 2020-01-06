@@ -34,4 +34,4 @@ Pass in an asset's entry id and it will return a signed URL for that asset:
 [The MIT License (MIT)](./LICENSE.md)
 
 Copyright © 2016–2019 [Jonathan Melville](https://github.com/jonathanmelville/s3securedownloads)<br/>
-Copyright © 2019 [Kenneth Ormandy Inc.](https://kennethormandy.com)
+Copyright © 2019–2020 [Kenneth Ormandy Inc.](https://kennethormandy.com)
