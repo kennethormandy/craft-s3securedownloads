@@ -25,7 +25,8 @@ composer require kennethormandy/craft-s3securedownloads
 Pass in an asset's entry id and it will return a signed URL for that asset:
 
 ```twig
-<a href="{{ getSignedUrl(entry.myAssetField[0].id) }}">{{ entry.myAssetField[0].title }}</a>
+{% set asset = entry.myAssetField.one() %}
+<a href="{{ getSignedUrl(asset.id) }}">{{ asset }}</a>
 ```
 
 ## License
