@@ -20,7 +20,7 @@ use craft\base\Plugin;
 use craft\web\twig\variables\CraftVariable;
 
 use kennethormandy\s3securedownloads\models\Settings;
-use kennethormandy\s3securedownloads\services\S3SecureDownloadsService;
+use kennethormandy\s3securedownloads\services\SignUrl;
 use kennethormandy\s3securedownloads\twigextensions\S3SecureDownloadsTwigExtension;
 use kennethormandy\s3securedownloads\controllers\DownloadProxyController;
 
@@ -38,7 +38,7 @@ class S3SecureDownloads extends Plugin
       self::$plugin = $this;
 
       $this->setComponents([
-        's3securedownloads' => S3SecureDownloadsService::class,
+        'signUrl' => SignUrl::class,
       ]);
 
       if (Craft::$app->request->getIsSiteRequest()) {

@@ -27,7 +27,7 @@ class DownloadProxyController extends Controller
 			// TODO Error
 		}
 
-		$signedUrl = S3SecureDownloads::$plugin->s3securedownloads->getSignedUrl($entry_id);
+		$signedUrl = S3SecureDownloads::$plugin->signUrl->getSignedUrl($entry_id);
 
 		return $this->redirect($signedUrl, 302);
 	}

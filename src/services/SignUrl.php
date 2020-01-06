@@ -13,7 +13,7 @@ use craft\base\Volume;
 
 use yii\base\Exception;
 
-class S3SecureDownloadsService extends Component
+class SignUrl extends Component
 {
 	public const EVENT_BEFORE_SIGN_URL = 'EVENT_BEFORE_SIGN_URL';
 	public const EVENT_AFTER_SIGN_URL = 'EVENT_AFTER_SIGN_URL';
