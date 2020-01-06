@@ -16,6 +16,7 @@ namespace kennethormandy\s3securedownloads\twigextensions;
 use kennethormandy\s3securedownloads\S3SecureDownloads;
 use kennethormandy\s3securedownloads\services;
 
+use craft\elements\Asset;
 use craft\helpers\UrlHelper;
 
 class S3SecureDownloadsTwigExtension extends \Twig_Extension
@@ -48,9 +49,23 @@ class S3SecureDownloadsTwigExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function getSignedUrl($entry_id = null)
+    public function getSignedUrl($asset = null)
     {
-        $url = UrlHelper::actionUrl('s3securedownloads/download-proxy/get-file', array('id' => $entry_id));
+        $assetUid = $this->_getUidFromId($asset);
+        $params = array('uid' => $assetUid);
+
+        $url = UrlHelper::actionUrl('s3securedownloads/download-proxy/get-file', $params);
         return $url;
+    }
+    
+    private function _getUidFromId($asset = null)
+    {
+      if (!is_string($asset) && !is_numeric($asset)) {
+        return '';
+      }
+
+      $asset = Asset::find()->id($asset)->one();
+
+      return $asset->uid;
     }
 }

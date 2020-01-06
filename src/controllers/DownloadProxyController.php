@@ -21,7 +21,7 @@ class DownloadProxyController extends Controller
 			$this->requireLogin();
 		}
 		
-		$entry_id = $_GET['id'];
+		$entry_id = $_GET['uid'];
 		
 		if (!isset($entry_id)) {
 			// TODO Error

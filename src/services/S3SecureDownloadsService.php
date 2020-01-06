@@ -20,7 +20,7 @@ class S3SecureDownloadsService extends Component
 			throw new Exception('No asset defined');
 		}
 
-		$asset = Asset::find()->id($asset_id)->one();
+		$asset = Asset::find()->uid($asset_id)->one();
 		$fileName = $asset->filename;
 
 		$sourceType = $asset->volume;
