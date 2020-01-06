@@ -15,6 +15,17 @@
 
 ## Next
 
+## [2.2.1 - 2020-01-05](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v2.2.1)
+
+### Added
+
+- Added better example to README
+
+### Fixed
+
+- Replaces asset `id` with `uid` in URL to proxying action controller. The result is URLs that still point internally to an action that checks if the user is logged in (if enabled in the settings), but now they end with the `uid` rather than the `id`, ex: `get-file&uid=a1a1a111-b2b2-cc33-4dd4-eeeee5e55555`
+- Removes custom function to convert environment variables in settings, in favour of Craft’s
+
 ## [2.2.0 - 2020-01-05](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v2.2.0)
 
 ### Added
