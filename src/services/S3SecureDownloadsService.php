@@ -14,24 +14,6 @@ use yii\base\Exception;
 
 class S3SecureDownloadsService extends Component
 {
-
-	// public function getSetting( $setting_name ) {
-	// 	$plugin = craft()->plugins->getPlugin( 's3SecureDownloads' );
-	// 	$settings = $plugin->getSettings();
-	// 
-	// 	return $settings->$setting_name;
-	// }
-	
-	private function convertEnvVariable( $string ) {
-		// It’s an environment variable
-		if ($string[0] === '$') {
-			$stringEnvVariable = str_replace('$', '', $string);
-			$string = getenv($stringEnvVariable);
-		}
-		
-		return $string;
-	}
-
 	public function getSignedUrl( $asset_id ) {
 
 		if (empty($asset_id)) {
@@ -44,16 +26,16 @@ class S3SecureDownloadsService extends Component
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
 
-		$bucketName = $this->convertEnvVariable($assetSettings['bucket']);
+		$bucketName = Craft::parseEnv($assetSettings['bucket']);
 
 		// Add slash to end of path, since subfolder may not have it
 		// https://stackoverflow.com/a/9339669/864799
 		$urlPrefix = rtrim( $assetSettings['subfolder'], "/" ) . "/";
 		
 		$baseAssetPath = $urlPrefix . $fileName;
-		$keyId = $this->convertEnvVariable($assetSettings['keyId']);
+		$keyId = Craft::parseEnv($assetSettings['keyId']);
 
-		$secretKey = $this->convertEnvVariable($assetSettings['secret']);
+		$secretKey = Craft::parseEnv($assetSettings['secret']);
 		$pluginSettings = S3SecureDownloads::$plugin->getSettings();
 		$linkExpirationTime = $pluginSettings->linkExpirationTime;
 		$forceDownload = $pluginSettings->forceFileDownload;
@@ -75,9 +57,10 @@ class S3SecureDownloadsService extends Component
 		}
 		
 		$string_to_sign = "GET\n\n\n{$expires}\n/{$bucketName}/{$resource}";
-		
+
 		if ($assetSettings['hasUrls']) {
-			$base_url = $this->convertEnvVariable($assetSettings['url']);
+			
+			$base_url = Craft::parseEnv($assetSettings['url']);
 
 			// Remove possible duplicate trailing slash
 			$base_url = rtrim( $base_url, "/" );
