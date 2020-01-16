@@ -39,5 +39,14 @@
     "developer": "Kenneth Ormandy Inc.",
     "class": "kennethormandy\\s3securedownloads\\S3SecureDownloads",
     "documentationUrl": "https://github.com/kennethormandy/craft-s3securedownloads/blob/master/README.md"
+  },
+  "require-dev": {
+    "codeception/codeception": "^4.0",
+    "codeception/module-asserts": "^1.1",
+    "vlucas/phpdotenv": "^3.0",
+    "codeception/module-yii2": "^1.0"
+  },
+  "scripts": {
+    "test": "vendor/bin/codecept run --debug"
   }
 }
