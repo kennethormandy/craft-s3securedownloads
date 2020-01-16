@@ -1,22 +1,9 @@
 # Release Notes for S3 Secure Downloads
-<!--
 
-## [0.0.0 - YYYY-MM-DD](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v0.0.0)
-
-### Added
-### Changed
-### Deprecated
-### Removed
-### Fixed
-### Security
-
-## Next
+## Unreleased
 
 ### Changed
-
 - Sets minimum version to Craft v3.1.5
-
--->
 
 ## [2.2.1 - 2020-01-05](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v2.2.1)
 
@@ -49,3 +36,16 @@
 
 ### Added
 - Initial version ported to Craft CMS 3
+
+<!--
+
+## [0.0.0 - YYYY-MM-DD](https://github.com/kennethormandy/craft-s3securedownloads/releases/tag/v0.0.0)
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+-->
