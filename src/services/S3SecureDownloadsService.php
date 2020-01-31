@@ -22,6 +22,9 @@ class S3SecureDownloadsService extends Component
 
 		$asset = Asset::find()->uid($asset_id)->one();
 		$fileName = $asset->filename;
+		if($asset->folderPath) {
+			$fileName = $asset->folderPath . $asset->filename;
+		}
 
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
