@@ -18,4 +18,10 @@ modules:
             plugins: []
             cleanup: true
             transaction: true
-            dbSetup: {clean: true, setupCraft: true}
+            # setupCraft is false, because we don’t want to clear
+            # out the local database each time we run the tests
+            dbSetup: {clean: false, setupCraft: false}
+
+            # false to use the parent Craft install
+            # true to fake everything, to test in isolation
+            fullMock: true
