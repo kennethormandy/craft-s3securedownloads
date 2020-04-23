@@ -23,6 +23,16 @@ class SignUrlInstalledPluginTest extends Unit
     protected function _after()
     {
     }
+    
+    protected function _checkUrlBasics($result) {
+      codecept_debug('');
+      codecept_debug($result);
+      codecept_debug('');
+
+      $this->assertTrue(is_string($result));
+      $this->assertStringContainsString('https://', $result);
+      $this->assertStringContainsString('amazonaws.com', $result);
+    }
 
     public function testSignUrl()
     {
@@ -41,17 +51,11 @@ class SignUrlInstalledPluginTest extends Unit
       $this->assertTrue(isset($asset));
       $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
 
-      codecept_debug('');
-      codecept_debug($result);
-      codecept_debug('');
-
-      $this->assertTrue(is_string($result));
-      $this->assertStringContainsString('https://', $result);
-      $this->assertStringContainsString('amazonaws.com', $result);
+      $this->_checkUrlBasics($result);
       $this->assertStringContainsString($filename, $result);
     }
     
-    public function testAssetInSubfolder()
+    public function testAssetFolderPath()
     {
       $hardCodedFolderId = 5;
       $hardCodedVolumeHandle = 'volumeS3';
@@ -63,13 +67,11 @@ class SignUrlInstalledPluginTest extends Unit
       $this->assertTrue(isset($asset->folderPath));
       $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
 
-      codecept_debug('');
-      codecept_debug($result);
-      codecept_debug('');
+      $this->_checkUrlBasics($result);
+      $this->assertStringContainsString($asset->folderPath, $result);
 
-      $this->assertTrue(is_string($result));
-      $this->assertStringContainsString('https://', $result);
-      $this->assertStringContainsString('amazonaws.com', $result);
+    }
+    
 
       $this->assertStringContainsString($asset->folderPath, $result);
 
