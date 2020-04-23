@@ -28,7 +28,7 @@
   "require": {
     "craftcms/cms": "^3.1.5",
     "craftcms/aws-s3": "^1.2",
-    "sistemi-etime/flysystem-plugin-aws-s3-v3": "^1.0"
+    "aws/aws-sdk-php": "^3.135"
   },
   "autoload": {
     "psr-4": {
