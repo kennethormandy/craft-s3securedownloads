@@ -18,8 +18,8 @@ class SignUrl extends Component
 	public const EVENT_BEFORE_SIGN_URL = 'EVENT_BEFORE_SIGN_URL';
 	public const EVENT_AFTER_SIGN_URL = 'EVENT_AFTER_SIGN_URL';
 
-	public function getSignedUrl( $asset_uid ) {
-
+	public function getSignedUrl( $asset_uid )
+	{
 		if (empty($asset_uid)) {
 			throw new Exception('No asset defined');
 		}
@@ -30,6 +30,23 @@ class SignUrl extends Component
 			$event = new SignUrlEvent([ 'asset' => $asset ]);
 			$this->trigger(self::EVENT_BEFORE_SIGN_URL, $event);
 		}
+
+		$url = '';
+
+		// TOOD Try new signing here, if it doesn’t work…
+		
+		$url = $this->_manuallyBuildSignedUrl($asset);
+
+		if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
+			$event = new SignUrlEvent([ 'asset' => $asset ]);
+			$this->trigger(self::EVENT_AFTER_SIGN_URL, $event);
+		}
+		
+		return $url;
+	}
+	
+	private function _manuallyBuildSignedUrl( $asset )
+	{
 
 		$fileName = $asset->filename;
 		if ($asset->folderPath) {
@@ -94,12 +111,6 @@ class SignUrl extends Component
 
 		$final_url = $final_url . "AWSAccessKeyId=$keyId&Signature=$signature&Expires=$expires";
 
-		if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
-			$event = new SignUrlEvent([ 'asset' => $asset ]);
-			$this->trigger(self::EVENT_AFTER_SIGN_URL, $event);
-		}
-		
 		return $final_url;
-
 	}
 }
