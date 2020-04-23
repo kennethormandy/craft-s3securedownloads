@@ -38,16 +38,17 @@ class SignUrl extends Component
 
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
-		$bucketName = Craft::parseEnv($assetSettings['bucket']);
+		$awsSettings = isset($assetSettings['settings']) ? $assetSettings['settings'] : $assetSettings;
+		$bucketName = Craft::parseEnv($awsSettings['bucket']);
 
 		// Add slash to end of path, since subfolder may not have it
 		// https://stackoverflow.com/a/9339669/864799
-		$urlPrefix = rtrim( $assetSettings['subfolder'], "/" ) . "/";
+		$urlPrefix = rtrim( $awsSettings['subfolder'], "/" ) . "/";			
 		
 		$baseAssetPath = $urlPrefix . $fileName;
-		$keyId = Craft::parseEnv($assetSettings['keyId']);
+		$keyId = Craft::parseEnv($awsSettings['keyId']);
 
-		$secretKey = Craft::parseEnv($assetSettings['secret']);
+		$secretKey = Craft::parseEnv($awsSettings['secret']);
 		$pluginSettings = S3SecureDownloads::$plugin->getSettings();
 		$linkExpirationTime = $pluginSettings->linkExpirationTime;
 		$forceDownload = $pluginSettings->forceFileDownload;
