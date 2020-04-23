@@ -93,14 +93,10 @@ class SignUrl extends Component
 				$url = false;
 		}
 		
-		codecept_debug('$url');
-		codecept_debug($url);
-		codecept_debug(' ');
-
-		// if(!isset($url) || !$url) {
-		// 	// If new signing approach didn’t work… 
-		// 	$url = $this->_manuallyBuildSignedUrl($asset);			
-		// }
+		if(!isset($url) || !$url) {
+			// If new signing approach didn’t work…
+			$url = $this->_manuallyBuildUrlSignatureV2($asset);			
+		}
 
 		if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
 			$event = new SignUrlEvent([ 'asset' => $asset ]);
@@ -138,8 +134,8 @@ class SignUrl extends Component
 		
 		return $urlPrefix . $filename;
 	}
-	
-	private function _manuallyBuildSignedUrl( $asset )
+		
+	private function _manuallyBuildUrlSignatureV2( $asset )
 	{
 
 		$baseAssetPath = $this->_getAssetPathWithSubfolder($asset);
