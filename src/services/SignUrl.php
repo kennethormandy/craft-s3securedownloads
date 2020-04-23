@@ -12,10 +12,8 @@ use craft\elements\Asset;
 use craft\base\Volume;
 use craft\awss3\Volume as AwsVolume;
 
-use Etime\Flysystem\Plugin\AWS_S3 as AwsS3Plugin;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
-use League\Flysystem\Filesystem;
 use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 
 use yii\base\Exception;
 
@@ -49,27 +47,60 @@ class SignUrl extends Component
 		    'region' => Craft::parseEnv($volume->region),
 		    'version' => 'latest',
 		]);
-		$adapter = new AwsS3Adapter($client, Craft::parseEnv($volume->bucket), Craft::parseEnv($volume->subfolder));
-		$filesystem = new Filesystem($adapter);
-		$filesystem->addPlugin(new AwsS3Plugin\PresignedUrl());
 
-		
-		
-		// Something might be going wrong here, it can’t
-		// find the original asset, so it can’t sign the payload,
-		// so it adds UNSIGNED-PAYLOAD to the URL
-		$assetPath = $this->_getAssetPath($asset);
-		$assetFullUrl = 'https://craft-s3securedownloads.s3.us-west-2.amazonaws.com/' . $assetPath;
+		// // example.png
+		// codecept_debug($asset->getUri());
+		// 
+		// // https://s3.us-west-2.amazonaws.com/craft-s3securedownloads/example.png
+		// codecept_debug('$asset->getUrl()');
 
 		// TODO I think I’m missing the “string to sign”
 		// step, ie. there are some parts similar to the
 		// existing v2 implementation for v4
 		// https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html#example-signature-calculations
 		
-		// TOOD Maybe just do this directly, without plugin?
-		// https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-presigned-url.html
-		$url = $filesystem->getPresignedUrl($this->_getAssetPath($asset));
+		// TODO Right now the setting uses the old format (86400ms)
+		// but "+24 hours" seems like it would give the same result,
+		// and is a lot clearer in settings and code
+		$pluginSettings = S3SecureDownloads::$plugin->getSettings();
+		$linkExpirationTime = $pluginSettings->linkExpirationTime;
+		$expires = time()+$linkExpirationTime;
+		
+		codecept_debug('$expires');
+		codecept_debug($expires);
+		codecept_debug('');
 
+		$bucket = Craft::parseEnv($volume->getSettings()['bucket']);
+		$keyname = $this->_getAssetPathWithSubfolder($asset);
+		$getObjectOptions = [
+			'Bucket' => $bucket,
+			
+			// If there’s a subfolder, need it here for the key,
+			// otherwise you get a key is missing error
+			'Key' => $keyname
+		];
+
+		if (isset($pluginSettings->forceDownload) && $pluginSettings->forceDownload) {
+			// https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
+			$getObjectOptions['ResponseContentDisposition'] = "attachment; filename=" . $this->_getAssetPath($asset);
+		}
+
+		// TODO
+		$getObjectOptions['X-Amz-Content-Sha256'] = 'whatever';
+		
+		$command = $client->getCommand('GetObject', $getObjectOptions);
+		
+		try {
+				$request = $client->createPresignedRequest($command, $expires);
+				codecept_debug('$request');
+				codecept_debug($request);
+				codecept_debug('');
+
+				$url = (string) $request->getUri();
+		} catch (S3Exception $exception) {
+				$url = false;
+		}
+		
 		codecept_debug('$url');
 		codecept_debug($url);
 		codecept_debug(' ');
@@ -99,7 +130,7 @@ class SignUrl extends Component
 
 	private function _getAssetPathWithSubfolder( $asset )
 	{
-		$filename = _getAssetPath($asset);
+		$filename = $this->_getAssetPath($asset);
 		
 		$volume = $asset->getVolume();
 		$subfolder = $volume->subfolder;
@@ -138,7 +169,7 @@ class SignUrl extends Component
 		$headers = array();
 		
 		if ($forceDownload) {
-			$headers["response-content-disposition"] = "attachment; filename=" . $asset->filename;
+			$headers["response-content-disposition"] = "attachment; filename=" . $this->_getAssetPath($asset);
 		}
 
 		$resource = str_replace( array( '%2F', '%2B' ), array( '/', '+' ), rawurlencode( $baseAssetPath ) );
