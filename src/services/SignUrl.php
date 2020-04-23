@@ -39,12 +39,15 @@ class SignUrl extends Component
 		
 		$volume = $asset->getVolume();
 		
+		$region = Craft::parseEnv($volume->region);
+		
+		// TODO Use craftcms/aws-s3 helper function
 		$client = new S3Client([
 		    'credentials' => [
-		        'key'    => Craft::parseEnv($volume->keyId),
-		        'secret' => Craft::parseEnv($volume->secret)
-		    ],
-		    'region' => Craft::parseEnv($volume->region),
+						'key'    => Craft::parseEnv($volume->keyId),
+						'secret' => Craft::parseEnv($volume->secret)
+				],
+		    'region' => $region,
 		    'version' => 'latest',
 		]);
 
