@@ -50,4 +50,35 @@ class SignUrlInstalledPluginTest extends Unit
       $this->assertStringContainsString('amazonaws.com', $result);
       $this->assertStringContainsString($filename, $result);
     }
+    
+    public function testAssetInSubfolder()
+    {
+      $hardCodedFolderId = 5;
+      $hardCodedVolumeHandle = 'volumeS3';
+      $assetQuery = Asset::find()
+        ->volume($hardCodedVolumeHandle)
+        ->folderId($hardCodedFolderId);
+      $asset = $assetQuery->one();
+
+      $this->assertTrue(isset($asset->folderPath));
+
+      codecept_debug('$asset->folderPath');
+      codecept_debug($asset->folderPath);
+
+      codecept_debug($asset);
+      
+      $this->assertTrue(isset($asset));
+      $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
+
+      codecept_debug('');
+      codecept_debug($result);
+      codecept_debug('');
+
+      $this->assertTrue(is_string($result));
+      $this->assertStringContainsString('https://', $result);
+      $this->assertStringContainsString('amazonaws.com', $result);
+
+      $this->assertStringContainsString($asset->folderPath, $result);
+
+    }
 }
