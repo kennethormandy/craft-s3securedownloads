@@ -72,8 +72,19 @@ class SignUrlInstalledPluginTest extends Unit
 
     }
     
+    public function testAssetSubfolderVolume()
+    {
+      $hardCodedVolumeHandle = 'volumeS3Subfolder';
+      $assetQuery = Asset::find()
+        ->volume($hardCodedVolumeHandle);
+      $asset = $assetQuery->one();
 
+      // Shouldn’t have folderPath. A folderPath is folder in the volume,
+      // and this is the bucket subfolder as its own volume
+      $this->assertTrue($asset->folderPath === '');
+      $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
+
+      $this->_checkUrlBasics($result);
       $this->assertStringContainsString($asset->folderPath, $result);
-
     }
 }
