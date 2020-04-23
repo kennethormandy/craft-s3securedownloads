@@ -22,6 +22,9 @@ modules:
             # out the local database each time we run the tests
             dbSetup: {clean: false, setupCraft: false}
 
-            # false to use the parent Craft install
-            # true to fake everything, to test in isolation
-            fullMock: true
+            # `false` to use the parent Craft install
+            # `true` to fake everything, to test in isolation
+            # I would prefer to use `true`, but maybe that only works
+            # for testing lower-level things, or I don’t understand how
+            # to configure it well enough yet. 
+            fullMock: false
