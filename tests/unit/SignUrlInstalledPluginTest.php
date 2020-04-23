@@ -113,7 +113,20 @@ class SignUrlInstalledPluginTest extends Unit
       // Header is required
       $this->assertStringContainsString('X-Amz-Content-Sha256', $result, 'x-amz-content-sha256 header is required');
 
-      // Don’t really want this value
-      $this->assertStringNotContainsString('UNSIGNED-PAYLOAD', $result, 'Working on this');
+      // These examples show how you could pre-sign the URL without the SDK.
+      // I tried modifying them to take the existing URL from the SDK and then
+      // sign it with the SHA256 header using the file contents the contents
+      // …but what is the point? You are checking the file that this moment matches
+      // the file a moment later.
+    	//   Might have some meaning if the asset already has the SHA256
+    	// hash as part of its metadata.
+    	// Some examples:
+      //   https://gist.github.com/kelvinmo/d78be66c4f36415a6b80
+    	//   https://gist.github.com/anthonyeden/4448695ad531016ec12bcdacc9d91cb8
+      
+      // …so, no longer using this test:
+      // $this->assertStringNotContainsString('UNSIGNED-PAYLOAD', $result, 'Working on this');
+      // That seems to be the correct response if we don’t have the payload in advance (ex.
+      // the user just uploaded it).
     }
 }
