@@ -72,10 +72,15 @@ class SignUrl extends Component
 			'Key' => $keyname
 		];
 
-		if (isset($pluginSettings->forceDownload) && $pluginSettings->forceDownload) {
+		codecept_debug('$pluginSettings->forceFileDownload');
+		codecept_debug($pluginSettings->forceFileDownload);
+
+		if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
 			// https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
-			$getObjectOptions['ResponseContentDisposition'] = "attachment; filename=" . $this->_getAssetPath($asset);
+			$getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $asset->getFilename() . '"';
 		}
+		
+		codecept_debug($getObjectOptions);
 
 		// TODO If custom URL for bucket
 		// $getObjectOptions['endpoint'] = 
