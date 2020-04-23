@@ -46,7 +46,7 @@ class SignUrlInstalledPluginTest extends Unit
 
       $filename = $asset->getFilename();
       $volumeSettings = $asset->getVolume()->getSettings();
-      $awsRegion = Craft::parseEnv($volumeSettings['settings']['region']);
+      $awsRegion = Craft::parseEnv($volumeSettings['region']);
 
       $this->assertTrue(isset($asset));
       $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);

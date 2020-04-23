@@ -64,8 +64,6 @@ class SignUrlServiceTest extends Unit
       }
 
       $filename = $asset->getFilename();
-      $volumeSettings = $asset->getVolume()->getSettings();
-      $awsRegion = Craft::parseEnv($volumeSettings['settings']['region']);
 
       $this->assertTrue(isset($asset));
       $result = $this->service->getSignedUrl($asset->uid);
