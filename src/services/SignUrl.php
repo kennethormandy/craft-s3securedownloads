@@ -10,6 +10,12 @@ use craft\base\Component;
 use craft\elements\Entry;
 use craft\elements\Asset;
 use craft\base\Volume;
+use craft\awss3\Volume as AwsVolume;
+
+use Etime\Flysystem\Plugin\AWS_S3 as AwsS3Plugin;
+use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\Filesystem;
+use Aws\S3\S3Client;
 
 use yii\base\Exception;
 
@@ -20,6 +26,8 @@ class SignUrl extends Component
 
 	public function getSignedUrl( $asset_uid )
 	{
+		$url = false;
+
 		if (empty($asset_uid)) {
 			throw new Exception('No asset defined');
 		}
@@ -30,12 +38,45 @@ class SignUrl extends Component
 			$event = new SignUrlEvent([ 'asset' => $asset ]);
 			$this->trigger(self::EVENT_BEFORE_SIGN_URL, $event);
 		}
-
-		$url = '';
-
-		// TOOD Try new signing here, if it doesn’t work…
 		
-		$url = $this->_manuallyBuildSignedUrl($asset);
+		$volume = $asset->getVolume();
+		
+		$client = new S3Client([
+		    'credentials' => [
+		        'key'    => Craft::parseEnv($volume->keyId),
+		        'secret' => Craft::parseEnv($volume->secret)
+		    ],
+		    'region' => Craft::parseEnv($volume->region),
+		    'version' => 'latest',
+		]);
+		$adapter = new AwsS3Adapter($client, Craft::parseEnv($volume->bucket), Craft::parseEnv($volume->subfolder));
+		$filesystem = new Filesystem($adapter);
+		$filesystem->addPlugin(new AwsS3Plugin\PresignedUrl());
+
+		
+		
+		// Something might be going wrong here, it can’t
+		// find the original asset, so it can’t sign the payload,
+		// so it adds UNSIGNED-PAYLOAD to the URL
+		$assetPath = $this->_getFullPath($asset);
+
+		codecept_debug('https://craft-s3securedownloads.s3.us-west-2.amazonaws.com' . $assetPath);
+
+		// TODO I think I’m missing the “string to sign”
+		// step, ie. there are some parts similar to the
+		// existing v2 implementation for v4
+		// https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html#example-signature-calculations
+		
+		// TOOD Maybe just do this directly, without plugin?
+		// https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-presigned-url.html
+		$url = $filesystem->getPresignedUrl($asset);
+
+		codecept_debug($url);
+
+		// if(!isset($url) || !$url) {
+		// 	// If new signing approach didn’t work… 
+		// 	$url = $this->_manuallyBuildSignedUrl($asset);			
+		// }
 
 		if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
 			$event = new SignUrlEvent([ 'asset' => $asset ]);
@@ -45,24 +86,39 @@ class SignUrl extends Component
 		return $url;
 	}
 	
-	private function _manuallyBuildSignedUrl( $asset )
+	private function _getFullPath( $asset )
 	{
-
 		$fileName = $asset->filename;
 		if ($asset->folderPath) {
 			$fileName = $asset->folderPath . $asset->filename;
 		}
+		
+		$volume = $asset->getVolume();
+		$subfolder = $volume->subfolder;
+		
+		// Add slash to end of path, since subfolder may not have it
+		// https://stackoverflow.com/a/9339669/864799
+		$urlPrefix = rtrim( $subfolder, "/" ) . "/";			
+		
+		// TODO Still having an issue here with
+		// `subfolder/example.pdf` vs `/pdf/example.pdf`
+		// (Leading vs no leading slash)
+		codecept_debug('$urlPrefix');
+		codecept_debug($urlPrefix);
 
+		
+		return $urlPrefix . $fileName;
+	}
+	
+	private function _manuallyBuildSignedUrl( $asset )
+	{
+
+		$baseAssetPath = $this->_getFullPath($asset);
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
 		$awsSettings = isset($assetSettings['settings']) ? $assetSettings['settings'] : $assetSettings;
 		$bucketName = Craft::parseEnv($awsSettings['bucket']);
 
-		// Add slash to end of path, since subfolder may not have it
-		// https://stackoverflow.com/a/9339669/864799
-		$urlPrefix = rtrim( $awsSettings['subfolder'], "/" ) . "/";			
-		
-		$baseAssetPath = $urlPrefix . $fileName;
 		$keyId = Craft::parseEnv($awsSettings['keyId']);
 
 		$secretKey = Craft::parseEnv($awsSettings['secret']);
@@ -76,7 +132,7 @@ class SignUrl extends Component
 		$headers = array();
 		
 		if ($forceDownload) {
-			$headers["response-content-disposition"] = "attachment; filename=" . $fileName;
+			$headers["response-content-disposition"] = "attachment; filename=" . $asset->filename;
 		}
 
 		$resource = str_replace( array( '%2F', '%2B' ), array( '/', '+' ), rawurlencode( $baseAssetPath ) );
