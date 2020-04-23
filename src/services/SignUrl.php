@@ -58,10 +58,6 @@ class SignUrl extends Component
 		$linkExpirationTime = $pluginSettings->linkExpirationTime;
 		$expires = time()+$linkExpirationTime;
 		
-		codecept_debug('$expires');
-		codecept_debug($expires);
-		codecept_debug('');
-
 		$bucket = Craft::parseEnv($volume->getSettings()['bucket']);
 		$keyname = $this->_getAssetPathWithSubfolder($asset);
 		$getObjectOptions = [
@@ -72,16 +68,11 @@ class SignUrl extends Component
 			'Key' => $keyname
 		];
 
-		codecept_debug('$pluginSettings->forceFileDownload');
-		codecept_debug($pluginSettings->forceFileDownload);
-
 		if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
 			// https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
 			$getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $asset->getFilename() . '"';
 		}
 		
-		codecept_debug($getObjectOptions);
-
 		// TODO If custom URL for bucket
 		// $getObjectOptions['endpoint'] = 
 		// https://stackoverflow.com/a/47337098/864799
