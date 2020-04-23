@@ -77,9 +77,6 @@ class SignUrl extends Component
 			$getObjectOptions['ResponseContentDisposition'] = "attachment; filename=" . $this->_getAssetPath($asset);
 		}
 
-		// TODO
-		$getObjectOptions['X-Amz-Content-Sha256'] = 'whatever';
-		
 		$command = $client->getCommand('GetObject', $getObjectOptions);
 		
 		try {
