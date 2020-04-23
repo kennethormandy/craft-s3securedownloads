@@ -41,7 +41,7 @@ class SignUrl extends Component
 		// https://stackoverflow.com/a/9339669/864799
 		$urlPrefix = rtrim( $assetSettings['subfolder'], "/" ) . "/";
 		
-		$baseAssetPath = $urlPrefix . $fileName;
+		$baseAssetPath = $urlPrefix . $asset['folderPath'] . $fileName;
 		$keyId = Craft::parseEnv($assetSettings['keyId']);
 
 		$secretKey = Craft::parseEnv($assetSettings['secret']);
