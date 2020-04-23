@@ -47,12 +47,22 @@ class SignUrlInstalledPluginTest extends Unit
       $filename = $asset->getFilename();
       $volumeSettings = $asset->getVolume()->getSettings();
       $awsRegion = Craft::parseEnv($volumeSettings['region']);
+      $awsSecret = Craft::parseEnv($volumeSettings['secret']);
 
       $this->assertTrue(isset($asset));
       $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
 
       $this->_checkUrlBasics($result);
+
+      // Contains filename
       $this->assertStringContainsString($filename, $result);
+
+      // Contains AWS region
+      $this->assertStringContainsString($awsRegion, $result);
+
+      // Doesn’t have the volume’s AWS secret
+      $this->assertTrue(isset($awsSecret));
+      $this->assertStringNotContainsString($awsSecret, $result);
     }
     
     public function testAssetFolderPath()
