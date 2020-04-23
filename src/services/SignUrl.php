@@ -106,6 +106,8 @@ class SignUrl extends Component
 		
 		// Add slash to end of path, since subfolder may not have it
 		// https://stackoverflow.com/a/9339669/864799
+		// TODO Could replace some of this with Craft normalizePath()
+		// https://docs.craftcms.com/api/v3/craft-helpers-filehelper.html#public-methods
 		$urlPrefix = '';
 		if ($subfolder) {
 			$urlPrefix = rtrim( $subfolder, "/" ) . "/";			
