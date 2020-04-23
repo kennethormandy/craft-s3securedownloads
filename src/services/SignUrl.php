@@ -58,9 +58,8 @@ class SignUrl extends Component
 		// Something might be going wrong here, it can’t
 		// find the original asset, so it can’t sign the payload,
 		// so it adds UNSIGNED-PAYLOAD to the URL
-		$assetPath = $this->_getFullPath($asset);
-
-		codecept_debug('https://craft-s3securedownloads.s3.us-west-2.amazonaws.com' . $assetPath);
+		$assetPath = $this->_getAssetPath($asset);
+		$assetFullUrl = 'https://craft-s3securedownloads.s3.us-west-2.amazonaws.com/' . $assetPath;
 
 		// TODO I think I’m missing the “string to sign”
 		// step, ie. there are some parts similar to the
@@ -69,9 +68,11 @@ class SignUrl extends Component
 		
 		// TOOD Maybe just do this directly, without plugin?
 		// https://docs.aws.amazon.com/sdk-for-php/v3/developer-guide/s3-presigned-url.html
-		$url = $filesystem->getPresignedUrl($asset);
+		$url = $filesystem->getPresignedUrl($this->_getAssetPath($asset));
 
+		codecept_debug('$url');
 		codecept_debug($url);
+		codecept_debug(' ');
 
 		// if(!isset($url) || !$url) {
 		// 	// If new signing approach didn’t work… 
@@ -86,34 +87,37 @@ class SignUrl extends Component
 		return $url;
 	}
 	
-	private function _getFullPath( $asset )
+	private function _getAssetPath( $asset )
 	{
-		$fileName = $asset->filename;
+		$filename = $asset->filename;
 		if ($asset->folderPath) {
-			$fileName = $asset->folderPath . $asset->filename;
+			$filename = $asset->folderPath . $asset->filename;
 		}
+		
+		return $filename;
+	}
+
+	private function _getAssetPathWithSubfolder( $asset )
+	{
+		$filename = _getAssetPath($asset);
 		
 		$volume = $asset->getVolume();
 		$subfolder = $volume->subfolder;
 		
 		// Add slash to end of path, since subfolder may not have it
 		// https://stackoverflow.com/a/9339669/864799
-		$urlPrefix = rtrim( $subfolder, "/" ) . "/";			
+		$urlPrefix = '';
+		if ($subfolder) {
+			$urlPrefix = rtrim( $subfolder, "/" ) . "/";			
+		}
 		
-		// TODO Still having an issue here with
-		// `subfolder/example.pdf` vs `/pdf/example.pdf`
-		// (Leading vs no leading slash)
-		codecept_debug('$urlPrefix');
-		codecept_debug($urlPrefix);
-
-		
-		return $urlPrefix . $fileName;
+		return $urlPrefix . $filename;
 	}
 	
 	private function _manuallyBuildSignedUrl( $asset )
 	{
 
-		$baseAssetPath = $this->_getFullPath($asset);
+		$baseAssetPath = $this->_getAssetPathWithSubfolder($asset);
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
 		$awsSettings = isset($assetSettings['settings']) ? $assetSettings['settings'] : $assetSettings;
