@@ -49,6 +49,5 @@ class SignUrlInstalledPluginTest extends Unit
       $this->assertStringContainsString('https://', $result);
       $this->assertStringContainsString('amazonaws.com', $result);
       $this->assertStringContainsString($filename, $result);
-      $this->assertStringContainsString($awsRegion, $result);
     }
 }
