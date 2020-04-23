@@ -9,7 +9,7 @@ class DownloadProxyController extends Controller
 {
 	protected $allowAnonymous = true;
 
-	public function getSetting($setting_name) 
+	private function _getSetting($setting_name) 
 	{
 		$pluginSettings = S3SecureDownloads::$plugin->getSettings();
 		return $pluginSettings[$setting_name];
@@ -17,7 +17,7 @@ class DownloadProxyController extends Controller
 
 	public function actionGetFile() {
 
-		if( $this->getSetting("requireLoggedInUser") ) {
+		if( $this->_getSetting("requireLoggedInUser") ) {
 			$this->requireLogin();
 		}
 		
