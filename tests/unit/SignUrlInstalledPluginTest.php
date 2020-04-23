@@ -98,4 +98,18 @@ class SignUrlInstalledPluginTest extends Unit
       $this->_checkUrlBasics($result);
       $this->assertStringContainsString($asset->folderPath, $result);
     }
+    
+    public function testPayloadSignedV4()
+    {
+      $hardCodedFolderId = 5;
+      $hardCodedVolumeHandle = 'volumeS3';
+      $assetQuery = Asset::find()
+        ->volume($hardCodedVolumeHandle)
+        ->folderId($hardCodedFolderId);
+      $asset = $assetQuery->one();
+
+      $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
+
+      $this->assertStringNotContainsString('UNSIGNED-PAYLOAD', $result);
+    }
 }
