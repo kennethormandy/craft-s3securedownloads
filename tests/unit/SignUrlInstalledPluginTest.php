@@ -113,6 +113,9 @@ class SignUrlInstalledPluginTest extends Unit
       // Header is required
       $this->assertStringContainsString('X-Amz-Content-Sha256', $result, 'x-amz-content-sha256 header is required');
 
+      // Documentation:
+      // https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html#example-signature-calculations
+      //
       // These examples show how you could pre-sign the URL without the SDK.
       // I tried modifying them to take the existing URL from the SDK and then
       // sign it with the SHA256 header using the file contents the contents

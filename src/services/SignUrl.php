@@ -48,17 +48,6 @@ class SignUrl extends Component
 		    'version' => 'latest',
 		]);
 
-		// // example.png
-		// codecept_debug($asset->getUri());
-		// 
-		// // https://s3.us-west-2.amazonaws.com/craft-s3securedownloads/example.png
-		// codecept_debug('$asset->getUrl()');
-
-		// TODO I think I’m missing the “string to sign”
-		// step, ie. there are some parts similar to the
-		// existing v2 implementation for v4
-		// https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html#example-signature-calculations
-		
 		// TODO Right now the setting uses the old format (86400ms)
 		// but "+24 hours" seems like it would give the same result,
 		// and is a lot clearer in settings and code
