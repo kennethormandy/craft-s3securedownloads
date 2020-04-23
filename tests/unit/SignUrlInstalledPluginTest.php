@@ -110,6 +110,10 @@ class SignUrlInstalledPluginTest extends Unit
 
       $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
 
-      $this->assertStringNotContainsString('UNSIGNED-PAYLOAD', $result);
+      // Header is required
+      $this->assertStringContainsString('x-amz-content-sha256', $result, 'x-amz-content-sha256 header is required');
+
+      // Don’t really want this value
+      $this->assertStringNotContainsString('UNSIGNED-PAYLOAD', $result, 'Working on this');
     }
 }
