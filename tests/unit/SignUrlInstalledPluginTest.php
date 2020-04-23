@@ -26,8 +26,8 @@ class SignUrlInstalledPluginTest extends Unit
 
     public function testSignUrl()
     {
-      $volumeHandle = 'volumeS3';
-      $assetQuery = Asset::find()->volume($volumeHandle)->kind('image');
+      $hardCodedVolumeHandle = 'volumeS3';
+      $assetQuery = Asset::find()->volume($hardCodedVolumeHandle)->kind('image');
       $asset = $assetQuery->one();
 
       if (!isset($asset)) {
