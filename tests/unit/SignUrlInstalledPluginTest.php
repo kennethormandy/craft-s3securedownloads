@@ -32,6 +32,7 @@ class SignUrlInstalledPluginTest extends Unit
       $this->assertTrue(is_string($result));
       $this->assertStringContainsString('https://', $result);
       $this->assertStringContainsString('amazonaws.com', $result);
+      $this->assertStringContainsString('Expires=86', $result);
     }
 
     public function testSignUrl()
