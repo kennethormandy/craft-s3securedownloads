@@ -32,16 +32,19 @@ class SignUrl extends Component
 		}
 
 		$fileName = $asset->filename;
+		if ($asset->folderPath) {
+			$fileName = $asset->folderPath . $asset->filename;
+		}
+
 		$sourceType = $asset->volume;
 		$assetSettings = $sourceType->getAttributes();
-
 		$bucketName = Craft::parseEnv($assetSettings['bucket']);
 
 		// Add slash to end of path, since subfolder may not have it
 		// https://stackoverflow.com/a/9339669/864799
 		$urlPrefix = rtrim( $assetSettings['subfolder'], "/" ) . "/";
 		
-		$baseAssetPath = $urlPrefix . $asset['folderPath'] . $fileName;
+		$baseAssetPath = $urlPrefix . $fileName;
 		$keyId = Craft::parseEnv($assetSettings['keyId']);
 
 		$secretKey = Craft::parseEnv($assetSettings['secret']);
