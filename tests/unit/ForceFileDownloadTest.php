@@ -40,6 +40,14 @@ class forceFileDownloadTest extends Unit
 
       return $result;
     }
+    
+    private function _checkContentDisposition( $headers, $asset )
+    {
+      $this->assertTrue(isset($headers));
+      $this->assertTrue(isset($headers['Content-Disposition']));
+      $this->assertStringContainsString($asset->filename, $headers['Content-Disposition']);
+      $this->assertTrue('attachment; filename="' . $asset->filename . '"' === $headers['Content-Disposition']);
+    }
         
     public function testOff()
     {
@@ -96,10 +104,32 @@ class forceFileDownloadTest extends Unit
       codecept_debug($url);
       codecept_debug('');
 
-      $this->assertTrue(isset($headers));
-      $this->assertTrue(isset($headers['Content-Disposition']));
-      $this->assertStringContainsString($asset->filename, $headers['Content-Disposition']);
-      $this->assertTrue('attachment; filename="' . $asset->filename . '"' === $headers['Content-Disposition']);
+      $this->_checkContentDisposition($headers, $asset);
+    }
+    
+    public function testOnFolderPath()
+    {
+      $hardCodedFolderId = 5;
+      $asset = Asset::find()
+        ->folderId($hardCodedFolderId)
+        ->volume($this->volumeHandle)
+        ->one();
+
+      $forceFileDownload = 1;
+
+      // Change s3securedownloads\models\Settings value temporarily
+      S3SecureDownloads::$plugin
+        ->getSettings()['forceFileDownload'] = $forceFileDownload;
+
+      $url = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
+      $headers = $this->_getHeaders($url);
+
+      // Mainly check the default download filename is the same,
+      // ex. pdf/example.pdf could give you:
+      // `pdf_example.pdf` (folder and filename) or
+      // `example.pdf` (filename only)
+      // We want filename only
+      $this->_checkContentDisposition($headers, $asset);
     }
 
 }
