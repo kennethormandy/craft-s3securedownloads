@@ -81,10 +81,6 @@ class SignUrl extends Component
 		
 		try {
 				$request = $client->createPresignedRequest($command, $expires);
-				codecept_debug('$request');
-				codecept_debug($request);
-				codecept_debug('');
-
 				$url = (string) $request->getUri();
 		} catch (S3Exception $exception) {
 				$url = false;
