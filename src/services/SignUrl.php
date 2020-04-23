@@ -77,6 +77,10 @@ class SignUrl extends Component
 			$getObjectOptions['ResponseContentDisposition'] = "attachment; filename=" . $this->_getAssetPath($asset);
 		}
 
+		// TODO If custom URL for bucket
+		// $getObjectOptions['endpoint'] = 
+		// https://stackoverflow.com/a/47337098/864799
+
 		$command = $client->getCommand('GetObject', $getObjectOptions);
 		
 		try {
