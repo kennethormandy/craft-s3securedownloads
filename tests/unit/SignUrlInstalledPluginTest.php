@@ -61,13 +61,6 @@ class SignUrlInstalledPluginTest extends Unit
       $asset = $assetQuery->one();
 
       $this->assertTrue(isset($asset->folderPath));
-
-      codecept_debug('$asset->folderPath');
-      codecept_debug($asset->folderPath);
-
-      codecept_debug($asset);
-      
-      $this->assertTrue(isset($asset));
       $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
 
       codecept_debug('');
