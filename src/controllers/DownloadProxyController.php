@@ -7,6 +7,8 @@ use craft\web\Controller;
 
 class DownloadProxyController extends Controller
 {
+	// If this is false, you’ll get a 503 error instead of the
+	// login page, when requireLoggedInUser setting is enabled
 	protected $allowAnonymous = true;
 
 	private function _getSetting($setting_name) 
