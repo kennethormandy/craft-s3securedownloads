@@ -1,6 +1,6 @@
 # S3 Secure Downloads plugin for Craft CMS
 
-This plugin will return a [signed URL](http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html) used to allow temporary access to private objects with an expiring URL. You can optionally allow file downloads only for logged in users and force file downloads (useful for PDF files).
+This plugin will return a [pre-signed URL](http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html) used to allow temporary access to private objects with an expiring URL. You can optionally allow file downloads only for logged in users and force file downloads (useful for PDF files).
 
 From the original developer, [Jonathan Melville](https://github.com/jonathanmelville/s3securedownloads):
 
@@ -22,7 +22,7 @@ composer require kennethormandy/craft-s3securedownloads
 
 ## Usage
 
-Pass in an asset's entry id and it will return a signed URL for that asset:
+Pass in an asset's entry id and it will return a pre-signed URL for that asset:
 
 ```twig
 {% set asset = entry.myAssetField.one() %}
