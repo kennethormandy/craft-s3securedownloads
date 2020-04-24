@@ -23,7 +23,7 @@ class DownloadProxyController extends Controller
 			$this->requireLogin();
 		}
 		
-		$entry_id = $_GET['uid'];
+		$entry_id = Craft::$app->request->getParam('uid');
 		
 		if (!isset($entry_id)) {
 			// TODO Error
