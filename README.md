@@ -29,6 +29,10 @@ Pass in an asset's entry id and it will return a signed URL for that asset:
 <a href="{{ getSignedUrl(asset.id) }}">{{ asset }}</a>
 ```
 
+By default, only users logged in will be able to generate the pre-signed URL. This can be changed within the plugin settings.
+
+The generated a pre-signed AWS S3 URL will expire after 24 hours, or however long you have configured in the plugin settings.
+
 ## Events
 
 - `kennethormandy\s3securedownloads\services\SignUrl`
