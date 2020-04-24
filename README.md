@@ -33,6 +33,19 @@ By default, only users logged in will be able to generate the pre-signed URL. Th
 
 The generated a pre-signed AWS S3 URL will expire after 24 hours, or however long you have configured in the plugin settings.
 
+<!--
+
+## AWS S3 configuration
+
+- Make sure you have configured the Craft AWS S3 plugin and setup an [AWS IAM permissions](https://github.com/craftcms/aws-s3#aws-iam-permissions)
+- Works with or without “Objects can be public” for S3 bucket public access permissions
+- Set “Assets in this volume have public URLs” to `true`, and give the bucket URL (although from more recent testing, you can set the bucket URL and then disable it, and the asset.url won’t be given? Maybe this is preferable in terms of config?)
+- Set “Make Uploads Public” to `false`
+
+- Optionally, configure the bucket to block certain signature versions https://docs.aws.amazon.com/AmazonS3/latest/API/bucket-policy-s3-sigv4-conditions.html
+
+-->
+
 ## Events
 
 - `kennethormandy\s3securedownloads\services\SignUrl`
