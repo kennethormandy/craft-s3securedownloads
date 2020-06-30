@@ -8,7 +8,11 @@ From the original developer, [Jonathan Melville](https://github.com/jonathanmelv
 
 ![Screenshot of the plugin settings.](./src/resources/screenshots/screenshot.png)
 
-S3 Secure Downloads is built for Craft v3.x. For a version that runs on Craft v2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads).
+## AWS Signature Version
+
+[As of June 24, 2020](https://aws.amazon.com/blogs/aws/amazon-s3-update-sigv2-deprecation-period-extended-modified/), all new AWS S3 buckets require Signature Version 4. Previously, this was only required for certain regions.
+
+Upgrading the S3 plugin to the latest version (v3.x) will solve this issue and use Signature Version 4 by default.
 
 ## Installation
 
@@ -78,6 +82,10 @@ Event::on(
     }
 );
 ```
+
+## Original version
+
+S3 Secure Downloads is built for Craft v3.x. For a version that runs on Craft v2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads). [Note that as of June 24, 2020](https://aws.amazon.com/blogs/aws/amazon-s3-update-sigv2-deprecation-period-extended-modified/) all new AWS S3 buckets require URLs to be signed using Signature Version 4, and the original plugin (understandably) only signs URLs using Signature Version 2.
 
 ## License
 
