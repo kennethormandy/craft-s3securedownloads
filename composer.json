@@ -40,6 +40,7 @@
     "name": "S3 Secure Downloads",
     "developer": "Kenneth Ormandy Inc.",
     "class": "kennethormandy\\s3securedownloads\\S3SecureDownloads",
+    "changelogUrl": "https://raw.githubusercontent.com/kennethormandy/craft-s3securedownloads/master/CHANGELOG.md",
     "documentationUrl": "https://github.com/kennethormandy/craft-s3securedownloads/blob/master/README.md"
   },
   "require-dev": {
