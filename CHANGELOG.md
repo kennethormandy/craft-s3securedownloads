@@ -2,20 +2,22 @@
 
 ## Unreleased
 
-## 3.0.0-beta.1 - 2020-04-23
+## 3.0.0 - 2020-10-06
 
 ### Added
 - Added [before and after signing events](https://github.com/kennethormandy/craft-s3securedownloads#events) to hook onto
 - Added testing framework (currently need full install and S3 buckets to run)
-- Adds url pre-signing and force file download tests
-- Adds support for AWS Signature Version 4 signing process
+- Added url pre-signing and force file download tests
+- Added support for [AWS Signature Version 4 signing process](https://github.com/kennethormandy/craft-s3securedownloads#aws-signature-version)
 
 ### Changed
-- Sets minimum version to Craft v3.1.5, same as craftcms/aws-s3 plugin
-- Added 
+- Sets minimum version to Craft v3.1.5, same as [craftcms/aws-s3 plugin](https://github.com/craftcms/aws-s3)
+- Changed default signing process to use v4 instead of v2
 
 ### Fixed
 - Added support for downloads in folders (not just subfolders on the asset bucket) #3 #4
+
+## 3.0.0-beta.1 - 2020-04-23
 
 ## 2.2.1 - 2020-01-05
 
