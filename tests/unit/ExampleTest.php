@@ -4,10 +4,9 @@ namespace s3securedownloads\tests;
 
 use Codeception\Test\Unit;
 // use craft\services\Assets;
-use craft\elements\Asset;
-
-use UnitTester;
 use Craft;
+use craft\elements\Asset;
+use UnitTester;
 
 class ExampleTest extends Unit
 {
@@ -18,9 +17,9 @@ class ExampleTest extends Unit
 
     // public function getComponentMap()
     // {
-    // 
+    //
     //     codecept_debug('getComponentMap!');
-    // 
+    //
     //     return [
     //         [Assets::class, ['getAssets', 'assets']],
     //     ];
@@ -30,11 +29,11 @@ class ExampleTest extends Unit
     {
         $volumesService = Craft::$app->getVolumes();
         $assetsService = Craft::$app->getAssets();
-        
+
         $folder = $assetsService;
-        
+
         $asset = Asset::find()->one();
-        
+
         codecept_debug('hello');
         codecept_debug($asset->getFilename());
     }
