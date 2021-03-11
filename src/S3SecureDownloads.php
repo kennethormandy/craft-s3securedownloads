@@ -1,6 +1,6 @@
 <?php
 /**
- * S3 Secure Download plugin for Craft CMS
+ * S3 Secure Download plugin for Craft CMS.
  *
  * This plugin will return a signed URL used to allow secure/expiring downloads from an S3 bucket.
  *
@@ -9,7 +9,6 @@
  * @author    Jonathan Melville, Kenneth Ormandy
  * @copyright Copyright © 2016–2019 Jonathan Melville, Copyright © 2019 Kenneth Ormandy Inc.
  * @link      https://github.com/kennethormandy/craft-s3securedownloads
- * @package   S3SecureDownloads
  * @since     1.0.0
  */
 
@@ -17,38 +16,32 @@ namespace kennethormandy\s3securedownloads;
 
 use Craft;
 use craft\base\Plugin;
-use craft\web\twig\variables\CraftVariable;
-
 use kennethormandy\s3securedownloads\models\Settings;
 use kennethormandy\s3securedownloads\services\SignUrl;
 use kennethormandy\s3securedownloads\twigextensions\S3SecureDownloadsTwigExtension;
-use kennethormandy\s3securedownloads\controllers\DownloadProxyController;
-
-use yii\base\Event;
 
 class S3SecureDownloads extends Plugin
 {
-
     public $schemaVersion = '1.1.0';
     public $hasCpSettings = true;
 
     public static $plugin;
-    public function init() {
-      parent::init();
-      self::$plugin = $this;
+    public function init()
+    {
+        parent::init();
+        self::$plugin = $this;
 
-      $this->setComponents([
+        $this->setComponents([
         'signUrl' => SignUrl::class,
       ]);
 
-      if (Craft::$app->request->getIsSiteRequest()) {
-        // Add in our Twig extension
-        $extension = new S3SecureDownloadsTwigExtension();
-        Craft::$app->getView()->registerTwigExtension($extension);
-        // ?
+        if (Craft::$app->request->getIsSiteRequest()) {
+            // Add in our Twig extension
+            $extension = new S3SecureDownloadsTwigExtension();
+            Craft::$app->getView()->registerTwigExtension($extension);
+            // ?
         // Craft::$app->view->registerTwigExtension($extension);
-
-      }
+        }
     }
 
     /**
@@ -56,7 +49,7 @@ class S3SecureDownloads extends Plugin
      *
      * @return mixed
      */
-    
+
     // Protected Methods
     // =========================================================================
 
@@ -81,7 +74,7 @@ class S3SecureDownloads extends Plugin
         return Craft::$app->view->renderTemplate(
             's3securedownloads/settings',
             [
-                'settings' => $this->getSettings()
+                'settings' => $this->getSettings(),
             ]
         );
     }

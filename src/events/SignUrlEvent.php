@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @since 2.3.0
  */
 
@@ -10,5 +9,5 @@ use craft\events\ModelEvent;
 
 class SignUrlEvent extends ModelEvent
 {
-  public $asset;
+    public $asset;
 }
