@@ -70,7 +70,7 @@ class SignUrlServiceTest extends Unit
         codecept_debug($result);
         codecept_debug('');
 
-        $this->assertInternalType('string', $result);
+        $this->assertIsString($result);
         $this->assertStringContainsString('https://', $result);
         $this->assertStringContainsString('amazonaws.com', $result);
         $this->assertStringContainsString($filename, $result);
