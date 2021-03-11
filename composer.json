@@ -47,9 +47,12 @@
     "codeception/codeception": "^4.0",
     "codeception/module-asserts": "^1.1",
     "vlucas/phpdotenv": "^3.0",
-    "codeception/module-yii2": "^1.0"
+    "codeception/module-yii2": "^1.0",
+    "friendsofphp/php-cs-fixer": "^2.18",
+    "yiisoft/yii2-dev": "*"
   },
   "scripts": {
-    "test": "vendor/bin/codecept run --debug"
+    "test": "vendor/bin/codecept run --debug",
+    "format": "vendor/bin/php-cs-fixer fix"
   }
 }
