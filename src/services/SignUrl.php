@@ -23,13 +23,17 @@ class SignUrl extends Component
         }
 
         $asset = Asset::find()->uid($asset_uid)->one();
+        $event = new SignUrlEvent(['asset' => $asset]);
 
         if ($this->hasEventHandlers(self::EVENT_BEFORE_SIGN_URL)) {
-            $event = new SignUrlEvent(['asset' => $asset]);
             $this->trigger(self::EVENT_BEFORE_SIGN_URL, $event);
         }
 
-        $volume = $asset->getVolume();
+        if (!$event->asset) {
+			throw new Exception('No asset defined');
+		}
+
+        $volume = $event->asset->getVolume();
 
         $region = Craft::parseEnv($volume->region);
 
@@ -51,7 +55,7 @@ class SignUrl extends Component
         $expires = time() + $linkExpirationTime;
 
         $bucket = Craft::parseEnv($volume->getSettings()['bucket']);
-        $keyname = $this->_getAssetPathWithSubfolder($asset);
+        $keyname = $this->_getAssetPathWithSubfolder($event->asset);
         $getObjectOptions = [
             'Bucket' => $bucket,
 
@@ -61,7 +65,7 @@ class SignUrl extends Component
         ];
 
 		if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
-			$forceDownloadFilename = $asset->getFilename();
+			$forceDownloadFilename = $event->asset->getFilename();
 			if (isset($options['filename'])) {
 				$forceDownloadFilename = $options['filename'];
 			}
@@ -83,11 +87,10 @@ class SignUrl extends Component
 
         if (!isset($url) || !$url) {
             // If new signing approach didn’t work…
-            $url = $this->_manuallyBuildUrlSignatureV2($asset);
+            $url = $this->_manuallyBuildUrlSignatureV2($event->asset);
         }
 
         if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
-            $event = new SignUrlEvent(['asset' => $asset]);
             $this->trigger(self::EVENT_AFTER_SIGN_URL, $event);
         }
 
