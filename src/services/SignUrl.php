@@ -15,9 +15,8 @@ class SignUrl extends Component
     public const EVENT_BEFORE_SIGN_URL = 'EVENT_BEFORE_SIGN_URL';
     public const EVENT_AFTER_SIGN_URL = 'EVENT_AFTER_SIGN_URL';
 
-    public function getSignedUrl($asset_uid)
-    {
-        $url = false;
+	public function getSignedUrl( $asset_uid, $options = [] )
+	{
 
         if (empty($asset_uid)) {
             throw new Exception('No asset defined');
@@ -61,13 +60,16 @@ class SignUrl extends Component
             'Key' => $keyname,
         ];
 
-        if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
-            // https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
-            $getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $asset->getFilename() . '"';
-        }
+		if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
+			$forceDownloadFilename = $asset->getFilename();
+			if (isset($options['filename'])) {
+				$forceDownloadFilename = $options['filename'];
+			}
 
-        // TODO If custom URL for bucket
-        // $getObjectOptions['endpoint'] =
+			// https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
+			$getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $forceDownloadFilename . '"';
+		}
+		
         // https://stackoverflow.com/a/47337098/864799
 
         $command = $client->getCommand('GetObject', $getObjectOptions);
