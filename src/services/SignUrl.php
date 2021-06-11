@@ -15,9 +15,8 @@ class SignUrl extends Component
     public const EVENT_BEFORE_SIGN_URL = 'EVENT_BEFORE_SIGN_URL';
     public const EVENT_AFTER_SIGN_URL = 'EVENT_AFTER_SIGN_URL';
 
-	public function getSignedUrl( $asset_uid, $options = [] )
-	{
-
+    public function getSignedUrl($asset_uid, $options = [])
+    {
         if (empty($asset_uid)) {
             throw new Exception('No asset defined');
         }
@@ -30,8 +29,8 @@ class SignUrl extends Component
         }
 
         if (!$event->asset) {
-			throw new Exception('No asset defined');
-		}
+            throw new Exception('No asset defined');
+        }
 
         $volume = $event->asset->getVolume();
 
@@ -64,16 +63,16 @@ class SignUrl extends Component
             'Key' => $keyname,
         ];
 
-		if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
-			$forceDownloadFilename = $event->asset->getFilename();
-			if (isset($options['filename'])) {
-				$forceDownloadFilename = $options['filename'];
-			}
+        if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
+            $forceDownloadFilename = $event->asset->getFilename();
+            if (isset($options['filename'])) {
+                $forceDownloadFilename = $options['filename'];
+            }
 
-			// https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
-			$getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $forceDownloadFilename . '"';
-		}
-		
+            // https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
+            $getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $forceDownloadFilename . '"';
+        }
+
         // https://stackoverflow.com/a/47337098/864799
 
         $command = $client->getCommand('GetObject', $getObjectOptions);
