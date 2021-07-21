@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+<!-- Code formatting -->
+
 ## 3.0.0 - 2020-10-06
 
 ### Added
@@ -35,7 +37,7 @@
 
 ### Fixed
 - Fixed Changelog formatting, path in `composer.json`
-- Fixed used of requireLoggedInUser setting for Craft 3
+- Fixed used of `requireLoggedInUser` setting for Craft 3
 - Fixed possibility of leading slash in resource name
 
 ### Changed
