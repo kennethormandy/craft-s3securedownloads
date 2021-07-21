@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 3.0.1 - 2021-07-21
+
+### Fixed
+- Fixes support for subfolder as an environment variable, in asset volume settings #8
+
 <!-- Code formatting -->
 
 ## 3.0.0 - 2020-10-06
