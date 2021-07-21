@@ -116,7 +116,7 @@ class SignUrl extends Component
         $urlPrefix = '';
         if ($subfolder) {
             $parseSubfolder = Craft::parseEnv($subfolder);
-            $urlPrefix = rtrim( $parseSubfolder, "/" ) . "/";
+            $urlPrefix = rtrim($parseSubfolder, '/') . '/';
         }
 
         return $urlPrefix . $filename;
