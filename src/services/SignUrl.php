@@ -115,7 +115,8 @@ class SignUrl extends Component
         // https://docs.craftcms.com/api/v3/craft-helpers-filehelper.html#public-methods
         $urlPrefix = '';
         if ($subfolder) {
-            $urlPrefix = rtrim($subfolder, '/') . '/';
+            $parseSubfolder = Craft::parseEnv($subfolder);
+            $urlPrefix = rtrim($parseSubfolder, '/') . '/';
         }
 
         return $urlPrefix . $filename;
