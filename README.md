@@ -37,6 +37,17 @@ By default, only users logged in will be able to generate the pre-signed URL. Th
 
 The generated a pre-signed AWS S3 URL will expire after 24 hours, or however long you have configured in the plugin settings.
 
+## Options
+
+### `filename`
+
+By default, the download will use the same filename as the Craft CMS asset. Alternatively, a custom filename can be passed to AWS instead. For example:
+
+```twig
+{% set asset = entry.myAssetField.one() %}
+<a href="{{ getSignedUrl(asset.id, { filename: 'my-new-filename.png' }) }}">{{ asset }}</a>
+```
+
 <!--
 
 ## AWS S3 configuration
