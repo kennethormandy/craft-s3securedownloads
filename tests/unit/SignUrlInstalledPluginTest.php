@@ -137,6 +137,8 @@ class SignUrlInstalledPluginTest extends Unit
         $hardCodedVolumeHandle = 'volumeS3';
         $assetQuery = Asset::find()->volume($hardCodedVolumeHandle)->kind('image');
         $asset = $assetQuery->one();
+
+        $originalFilename = $asset->getFilename();
         $customFilename = 'custom-filename.png';
 
         if (!isset($asset)) {
@@ -144,7 +146,9 @@ class SignUrlInstalledPluginTest extends Unit
         }
 
         $this->assertTrue(isset($asset));
-        $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
+        $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid, [
+            'filename' => $customFilename
+        ]);
 
         $this->_checkUrlBasics($result);
 
@@ -152,6 +156,6 @@ class SignUrlInstalledPluginTest extends Unit
         $this->assertStringContainsString($customFilename, $result);
 
         // Doesn’t have the original asset filename
-        $this->assertStringNotContainsString($asset->getFilename(), $result);
+        $this->assertStringNotContainsString("filename%3D%22$originalFilename", $result);
     }
 }
