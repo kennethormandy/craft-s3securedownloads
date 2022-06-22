@@ -131,4 +131,27 @@ class SignUrlInstalledPluginTest extends Unit
       // That seems to be the correct response if we don’t have the payload in advance (ex.
       // the user just uploaded it).
     }
+
+    public function testOptionsFilename()
+    {
+        $hardCodedVolumeHandle = 'volumeS3';
+        $assetQuery = Asset::find()->volume($hardCodedVolumeHandle)->kind('image');
+        $asset = $assetQuery->one();
+        $customFilename = 'custom-filename.png';
+
+        if (!isset($asset)) {
+            codecept_debug('⚠️ No image asset in a volume with the handle `volumeS3`');
+        }
+
+        $this->assertTrue(isset($asset));
+        $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
+
+        $this->_checkUrlBasics($result);
+
+        // Contains filename
+        $this->assertStringContainsString($customFilename, $result);
+
+        // Doesn’t have the original asset filename
+        $this->assertStringNotContainsString($asset->getFilename(), $result);
+    }
 }
