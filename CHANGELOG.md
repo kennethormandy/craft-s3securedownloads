@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 3.1.0 - 2022-06-22
+
+### Added
+- Added an [option](https://github.com/kennethormandy/craft-s3securedownloads/#options) for customizing filename of the download, rather than having to use the filename of the asset in Craft CMS
+
 ## 3.0.1 - 2021-07-21
 
 ### Fixed
