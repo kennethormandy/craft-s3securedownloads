@@ -25,12 +25,18 @@ class DownloadProxyController extends Controller
         }
 
         $entry_id = Craft::$app->request->getParam('uid');
+        $options = [];
+        $forceDownloadFilename = Craft::$app->request->getParam('filename');
 
         if (!isset($entry_id)) {
             // TODO Error
         }
 
-        $signedUrl = S3SecureDownloads::$plugin->signUrl->getSignedUrl($entry_id);
+        if (isset($forceDownloadFilename) and $forceDownloadFilename) {
+            $options['filename'] = $forceDownloadFilename;
+        }
+
+        $signedUrl = S3SecureDownloads::$plugin->signUrl->getSignedUrl($entry_id, $options);
 
         return $this->redirect($signedUrl, 302);
     }

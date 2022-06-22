@@ -15,22 +15,24 @@ class SignUrl extends Component
     public const EVENT_BEFORE_SIGN_URL = 'EVENT_BEFORE_SIGN_URL';
     public const EVENT_AFTER_SIGN_URL = 'EVENT_AFTER_SIGN_URL';
 
-    public function getSignedUrl($asset_uid)
+    public function getSignedUrl($asset_uid, $options = [])
     {
-        $url = false;
-
         if (empty($asset_uid)) {
             throw new Exception('No asset defined');
         }
 
         $asset = Asset::find()->uid($asset_uid)->one();
+        $event = new SignUrlEvent(['asset' => $asset]);
 
         if ($this->hasEventHandlers(self::EVENT_BEFORE_SIGN_URL)) {
-            $event = new SignUrlEvent(['asset' => $asset]);
             $this->trigger(self::EVENT_BEFORE_SIGN_URL, $event);
         }
 
-        $volume = $asset->getVolume();
+        if (!$event->asset) {
+            throw new Exception('No asset defined');
+        }
+
+        $volume = $event->asset->getVolume();
 
         $region = Craft::parseEnv($volume->region);
 
@@ -52,7 +54,7 @@ class SignUrl extends Component
         $expires = time() + $linkExpirationTime;
 
         $bucket = Craft::parseEnv($volume->getSettings()['bucket']);
-        $keyname = $this->_getAssetPathWithSubfolder($asset);
+        $keyname = $this->_getAssetPathWithSubfolder($event->asset);
         $getObjectOptions = [
             'Bucket' => $bucket,
 
@@ -62,12 +64,15 @@ class SignUrl extends Component
         ];
 
         if (isset($pluginSettings->forceFileDownload) && $pluginSettings->forceFileDownload) {
+            $forceDownloadFilename = $event->asset->getFilename();
+            if (isset($options['filename'])) {
+                $forceDownloadFilename = $options['filename'];
+            }
+
             // https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
-            $getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $asset->getFilename() . '"';
+            $getObjectOptions['ResponseContentDisposition'] = 'attachment; filename="' . $forceDownloadFilename . '"';
         }
 
-        // TODO If custom URL for bucket
-        // $getObjectOptions['endpoint'] =
         // https://stackoverflow.com/a/47337098/864799
 
         $command = $client->getCommand('GetObject', $getObjectOptions);
@@ -81,11 +86,10 @@ class SignUrl extends Component
 
         if (!isset($url) || !$url) {
             // If new signing approach didn’t work…
-            $url = $this->_manuallyBuildUrlSignatureV2($asset);
+            $url = $this->_manuallyBuildUrlSignatureV2($event->asset);
         }
 
         if ($this->hasEventHandlers(self::EVENT_AFTER_SIGN_URL)) {
-            $event = new SignUrlEvent(['asset' => $asset]);
             $this->trigger(self::EVENT_AFTER_SIGN_URL, $event);
         }
 

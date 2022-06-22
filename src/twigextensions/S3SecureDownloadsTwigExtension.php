@@ -45,11 +45,18 @@ class S3SecureDownloadsTwigExtension extends \Twig_Extension
     /**
      * @return string
      * @param null|mixed $asset
+     * @param mixed $options
      */
-    public function getSignedUrl($asset = null)
+    public function getSignedUrl($asset = null, $options = [])
     {
         $assetUid = $this->_getUidFromId($asset);
-        $params = ['uid' => $assetUid];
+        $params = [
+            'uid' => $assetUid,
+        ];
+
+        if (isset($options['filename']) && $options['filename']) {
+            $params['filename'] = $options['filename'];
+        }
 
         $url = UrlHelper::actionUrl('s3securedownloads/download-proxy/get-file', $params);
         return $url;
