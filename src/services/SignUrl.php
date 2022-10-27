@@ -32,7 +32,7 @@ class SignUrl extends Component
             throw new Exception('No asset defined');
         }
 
-        $volume = $event->asset->getVolume();
+        $volume = $event->asset->getFs();
 
         $region = Craft::parseEnv($volume->region);
 
@@ -110,7 +110,7 @@ class SignUrl extends Component
     {
         $filename = $this->_getAssetPath($asset);
 
-        $volume = $asset->getVolume();
+        $volume = $asset->getFs();
         $subfolder = $volume->subfolder;
 
         // Add slash to end of path, since subfolder may not have it

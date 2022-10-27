@@ -16,7 +16,7 @@ namespace kennethormandy\s3securedownloads\twigextensions;
 use craft\elements\Asset;
 use craft\helpers\UrlHelper;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class S3SecureDownloadsTwigExtension extends AbstractExtension
 {
@@ -40,7 +40,7 @@ class S3SecureDownloadsTwigExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFilter('getSignedUrl', [$this, 'getSignedUrl']),
+            new TwigFunction('getSignedUrl', [$this, 'getSignedUrl']),
         ];
     }
 
