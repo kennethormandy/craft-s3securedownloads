@@ -26,8 +26,8 @@
     "rss": "https://github.com/kennethormandy/craft-s3securedownloads/releases.atom"
   },
   "require": {
-    "craftcms/cms": "^3.1.5",
-    "craftcms/aws-s3": "^1.2",
+    "craftcms/cms": "^4.0.0",
+    "craftcms/aws-s3": "^2.0.1",
     "aws/aws-sdk-php": "^3.135"
   },
   "autoload": {
