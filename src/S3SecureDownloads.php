@@ -22,8 +22,8 @@ use kennethormandy\s3securedownloads\twigextensions\S3SecureDownloadsTwigExtensi
 
 class S3SecureDownloads extends Plugin
 {
-    public $schemaVersion = '1.1.0';
-    public $hasCpSettings = true;
+    public String $schemaVersion = '1.1.0';
+    public bool $hasCpSettings = true;
 
     public static $plugin;
     public function init()
@@ -58,7 +58,7 @@ class S3SecureDownloads extends Plugin
      *
      * @return \craft\base\Model|null
      */
-    protected function createSettingsModel()
+    protected function createSettingsModel(): ?craft\base\Model
     {
         return new Settings();
     }
