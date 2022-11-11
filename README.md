@@ -33,7 +33,7 @@ composer require kennethormandy/craft-s3securedownloads
 
 Then, install the plugin:
 
-```
+```sh
 # Install the plugin via the Control Panel, or by running:
 ./craft install/plugin s3securedownloads
 ```
