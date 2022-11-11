@@ -16,11 +16,11 @@ Upgrading the S3 plugin to the latest version (v3.x) will solve this issue and u
 
 ## Installation
 
-The Craft 4 version of the plugin is currently in beta. To explicitly install v4.0.0-beta.1, run:
+The Craft 4 version of the plugin is currently in beta. To install it, run:
 
 ```sh
 # Require the plugin with composer
-composer require kennethormandy/craft-s3securedownloads:4.0.0-beta.1
+composer require kennethormandy/craft-s3securedownloads:^4.0.0-beta.1
 ```
 
 To install the Craft 3 version:
