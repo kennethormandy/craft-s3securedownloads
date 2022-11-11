@@ -1,7 +1,7 @@
 {
   "name": "kennethormandy/craft-s3securedownloads",
   "description": "Return an AWS signed URL and proxy the download request.",
-  "version": "3.1.0",
+  "version": "4.0.0-beta.1",
   "type": "craft-plugin",
   "license": "MIT",
   "keywords": [

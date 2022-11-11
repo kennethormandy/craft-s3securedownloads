@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 4.0.0-beta.1 - 2022-11-11
+
+### Added
+- Added support for Craft 4 (beta) Thanks [@harry2909](https://github.com/harry2909)!
+
 ## 3.1.0 - 2022-06-22
 
 ### Added
