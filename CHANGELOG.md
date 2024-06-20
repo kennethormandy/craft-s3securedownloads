@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 4.0.1 - 2024-06-20
+
+### Fixed
+- Fixed missing AWS `S3Exception` class
+
 ## 4.0.0 - 2024-06-20
 
 ### Added
