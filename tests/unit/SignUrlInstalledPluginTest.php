@@ -46,7 +46,7 @@ class SignUrlInstalledPluginTest extends Unit
         }
 
         $filename = $asset->getFilename();
-        $volumeSettings = $asset->getVolume()->getSettings();
+        $volumeSettings = $asset->getFs()->getSettings();
         $awsRegion = Craft::parseEnv($volumeSettings['region']);
         $awsSecret = Craft::parseEnv($volumeSettings['secret']);
 
