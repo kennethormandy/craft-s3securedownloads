@@ -22,7 +22,7 @@ use kennethormandy\s3securedownloads\twigextensions\S3SecureDownloadsTwigExtensi
 
 class S3SecureDownloads extends Plugin
 {
-    public String $schemaVersion = '1.1.0';
+    public string $schemaVersion = '1.1.0';
     public bool $hasCpSettings = true;
 
     public static $plugin;
