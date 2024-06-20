@@ -80,6 +80,8 @@ class SignUrlInstalledPluginTest extends Unit
 
         $this->_checkUrlBasics($result);
         $this->assertStringContainsString($asset->folderPath, $result);
+
+        $this->assertStringContainsString($hardCodedFolderPath, $result);
     }
 
     public function testAssetSubfolderVolume()
