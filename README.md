@@ -8,28 +8,12 @@ From the original developer, [Jonathan Melville](https://github.com/jonathanmelv
 
 ![Screenshot of the plugin settings.](./src/resources/screenshots/screenshot.png)
 
-## AWS Signature Version
-
-[As of June 24, 2020](https://aws.amazon.com/blogs/aws/amazon-s3-update-sigv2-deprecation-period-extended-modified/), all new AWS S3 buckets require Signature Version 4. Previously, this was only required for certain regions.
-
-Upgrading the S3 plugin to the latest version (v3.x) will solve this issue and use Signature Version 4 by default.
-
 ## Installation
-
-The Craft 4 version of the plugin is currently in beta. To install it, run:
-
-```sh
-# Require the plugin with composer
-composer require kennethormandy/craft-s3securedownloads:^4.0.0-beta.1
-```
-
-To install the Craft 3 version:
 
 ```sh
 # Require the plugin with composer
 composer require kennethormandy/craft-s3securedownloads
 ```
-
 
 Then, install the plugin:
 
@@ -108,13 +92,13 @@ Event::on(
 );
 ```
 
-## Original version
+## Earlier versions
 
-S3 Secure Downloads is built for Craft v3.x. For a version that runs on Craft v2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads). [Note that as of June 24, 2020](https://aws.amazon.com/blogs/aws/amazon-s3-update-sigv2-deprecation-period-extended-modified/) all new AWS S3 buckets require URLs to be signed using Signature Version 4, and the original plugin (understandably) only signs URLs using Signature Version 2.
+S3 Secure Downloads is available for Craft 3, 4, and 5. For a version that runs on Craft v2.5.x, see [the original plugin](https://github.com/jonathanmelville/s3securedownloads). [Note that as of June 24, 2020](https://aws.amazon.com/blogs/aws/amazon-s3-update-sigv2-deprecation-period-extended-modified/) all new AWS S3 buckets require URLs to be signed using Signature Version 4, and the original plugin (understandably) only signs URLs using Signature Version 2.
 
 ## License
 
 [The MIT License (MIT)](./LICENSE.md)
 
 Copyright © 2016–2019 [Jonathan Melville](https://github.com/jonathanmelville/s3securedownloads)<br/>
-Copyright © 2019–2020 [Kenneth Ormandy Inc.](https://kennethormandy.com)
+Copyright © 2019–2024 [Kenneth Ormandy Inc.](https://kennethormandy.com)
