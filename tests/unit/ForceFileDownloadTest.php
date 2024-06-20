@@ -107,9 +107,9 @@ class ForceFileDownloadTest extends Unit
 
     public function testOnFolderPath()
     {
-        $hardCodedFolderId = 5;
+        $hardCodedFolderPath = 'subfolder/';
         $asset = Asset::find()
-        ->folderId($hardCodedFolderId)
+        ->folderPath($hardCodedFolderPath)
         ->volume($this->volumeHandle)
         ->one();
 

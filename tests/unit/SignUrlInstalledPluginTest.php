@@ -68,11 +68,11 @@ class SignUrlInstalledPluginTest extends Unit
 
     public function testAssetFolderPath()
     {
-        $hardCodedFolderId = 5;
+        $hardCodedFolderPath = 'subfolder/';
         $hardCodedVolumeHandle = 'volumeS3';
         $assetQuery = Asset::find()
         ->volume($hardCodedVolumeHandle)
-        ->folderId($hardCodedFolderId);
+        ->folderPath($hardCodedFolderPath);
         $asset = $assetQuery->one();
 
         $this->assertTrue(isset($asset->folderPath));
@@ -100,11 +100,11 @@ class SignUrlInstalledPluginTest extends Unit
 
     public function testPayloadSignedV4()
     {
-        $hardCodedFolderId = 5;
+        $hardCodedFolderPath = 'subfolder/';
         $hardCodedVolumeHandle = 'volumeS3';
         $assetQuery = Asset::find()
         ->volume($hardCodedVolumeHandle)
-        ->folderId($hardCodedFolderId);
+        ->folderPath($hardCodedFolderPath);
         $asset = $assetQuery->one();
 
         $result = S3SecureDownloads::$plugin->signUrl->getSignedUrl($asset->uid);
