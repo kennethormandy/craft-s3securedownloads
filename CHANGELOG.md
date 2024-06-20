@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 4.0.0 - 2024-06-20
+
+### Added
+- Added support for Craft 4 (unchanged from existing v4.0.0-beta.1)
+
+### Fixed
+- Fixed deprecation warning in Craft 4.4.0
+
 ## 4.0.0-beta.1 - 2022-11-11
 
 ### Added
