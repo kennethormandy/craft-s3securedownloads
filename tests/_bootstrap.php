@@ -15,11 +15,11 @@ define('CRAFT_VENDOR_PATH', dirname(__DIR__) . '/vendor');
 
 $devMode = true;
 
-// // Load dotenv?
-// if (class_exists(Dotenv\Dotenv::class)) {
-//     // By default, this will allow .env file values to override environment variables
-//     // with matching names. Use `createUnsafeImmutable` to disable this.
-//     Dotenv\Dotenv::createUnsafeMutable(CRAFT_TESTS_PATH)->load();
-// }
+// Load dotenv?
+if (class_exists(Dotenv\Dotenv::class)) {
+    // By default, this will allow .env file values to override environment variables
+    // with matching names. Use `createUnsafeImmutable` to disable this.
+    Dotenv\Dotenv::createUnsafeMutable(CRAFT_TESTS_PATH)->load();
+}
 
 TestSetup::configureCraft();
