@@ -2,6 +2,7 @@
 
 namespace kennethormandy\s3securedownloads\services;
 
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 use Craft;
 use craft\base\Component;
