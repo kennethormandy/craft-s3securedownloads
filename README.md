@@ -19,7 +19,7 @@ Then, install the plugin:
 
 ```sh
 # Install the plugin via the Control Panel, or by running:
-./craft install/plugin s3securedownloads
+./craft plugin/install s3securedownloads
 ```
 
 ## Usage
