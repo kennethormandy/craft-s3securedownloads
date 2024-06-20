@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 5.0.0 - 2024-06-20
+
+### Added
+- Added support for Craft 5
+
 ## 4.0.1 - 2024-06-20
 
 ### Fixed
