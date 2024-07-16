@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+- Added compatibility with Fortrabbit’s S3-like [object storage](https://github.com/fortrabbit/craft-object-storage)
+
 ## 3.1.0 - 2022-06-22
 
 ### Added
