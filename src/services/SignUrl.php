@@ -111,8 +111,10 @@ class SignUrl extends Component
     {
         $filename = $this->_getAssetPath($asset);
 
-        $volume = $asset->getVolume()->getFs();
-        $subfolder = $volume->subfolder;
+        $volume = $asset->getVolume();
+        $fs = $volume->getFs();
+        $subfolder = $fs->subfolder;
+        $subpath = $volume->getSubpath();
 
         // Add slash to end of path, since subfolder may not have it
         // https://stackoverflow.com/a/9339669/864799
@@ -124,7 +126,7 @@ class SignUrl extends Component
             $urlPrefix = rtrim($parseSubfolder, '/') . '/';
         }
 
-        return $urlPrefix . $filename;
+        return $urlPrefix . $subpath . $filename;
     }
 
     private function _manuallyBuildUrlSignatureV2($asset)
