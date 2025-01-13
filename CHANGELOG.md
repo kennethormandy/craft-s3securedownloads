@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 5.0.1 - 2025-01-13
+
+### Fixed
+- Fixed missing support for subpaths on Volumes (distinct from subfolders), added in Craft 5
+
 ## 5.0.0 - 2024-06-20
 
 ### Added
