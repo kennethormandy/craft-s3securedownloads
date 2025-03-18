@@ -7,6 +7,7 @@ use Aws\S3\S3Client;
 use Craft;
 use craft\base\Component;
 use craft\elements\Asset;
+use fortrabbit\ObjectStorage\Fs as FortrabbitFs;
 use kennethormandy\s3securedownloads\events\SignUrlEvent;
 use kennethormandy\s3securedownloads\S3SecureDownloads;
 use yii\base\Exception;
@@ -37,6 +38,10 @@ class SignUrl extends Component
 
         $region = Craft::parseEnv($volume->region);
 
+        // If we have a Fortrabbit Filesystem, pass-through the server endpoint to the AWS S3Client
+        // Null values for this setting are acceptable/the default (vendor/aws/aws-sdk-php/src/S3/S3Client.php @ line 423)
+        $volumeEndpoint = $volume instanceof FortrabbitFs ? Craft::parseEnv($volume->endpoint) : null;
+
         // TODO Use craftcms/aws-s3 helper function
         $client = new S3Client([
             'credentials' => [
@@ -45,6 +50,7 @@ class SignUrl extends Component
                 ],
             'region' => $region,
             'version' => 'latest',
+            'endpoint' => $volumeEndpoint
         ]);
 
         // TODO Right now the setting uses the old format (86400ms)
