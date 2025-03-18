@@ -37,6 +37,13 @@ class SignUrl extends Component
 
         $region = Craft::parseEnv($volume->region);
 
+        // If we have a Fortrabbit Filesystem, pass-through the server endpoint to the AWS S3Client
+        // Null values for this setting are acceptable/the default (vendor/aws/aws-sdk-php/src/S3/S3Client.php @ line 423)
+        $volumeEndpoint = null;
+        if (class_exists('\fortrabbit\ObjectStorage\Fs') && $volume instanceof \fortrabbit\ObjectStorage\Fs) {
+            $volumeEndpoint = Craft::parseEnv($volume->endpoint);
+        }
+        
         // TODO Use craftcms/aws-s3 helper function
         $client = new S3Client([
             'credentials' => [
@@ -45,6 +52,7 @@ class SignUrl extends Component
                 ],
             'region' => $region,
             'version' => 'latest',
+            'endpoint' => $volumeEndpoint
         ]);
 
         // TODO Right now the setting uses the old format (86400ms)
